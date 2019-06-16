@@ -53,8 +53,37 @@ class GameViewController: UIViewController, GameDelegate {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
                 
-                board = Board(name: "Player", boardNumbers: "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7")
+                //board = Board(name: "Player", boardNumbers: "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7")
                 //board = Board(name: "Player", boardNumbers: "86793421554312679819258734692641385778465912331527896423174568965839147247986253_")
+                let repository = SudokuRepository()
+                var boardNumbers = repository.getBoard(difficulty: .Easy, level: 1)
+                while true {
+                    let solver = Solver()
+                    let str = solver.generate()
+                    if let str = str {
+                        let count = str.characters.filter { $0 == "_" }.count
+                        if count>51 {
+                            boardNumbers = str
+                            break
+                        }
+                    }
+                }
+                board = Board(name: "Player", boardNumbers: boardNumbers)
+                /*
+                for _ in 0..<1000 {
+                    let solver = Solver()
+                    let str = solver.generate()
+                    if let str = str {
+                        let count = str.characters.filter { $0 == "_" }.count
+                        if count>50 {
+                            print("Board with: \(81-count) numbers")
+                            solver.initializeBoard(boardString: str)
+                            solver.printBoard()
+                        }
+                    }
+                }
+ */
+
                 scene.setup(delegate: self, board: board!)
                 /*
                  board.switchCandidateNumber(number: 1, x: 1, y: 1)
