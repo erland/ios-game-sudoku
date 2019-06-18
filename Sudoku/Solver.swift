@@ -114,20 +114,19 @@ class Solver {
         solve()
         if solutions.count>0 {
             let boardString = solutions[0]
+            let positions = (0..<81).shuffled()
             initializeBoard(boardString: boardString)
-            return generate(boardString: boardString)
+            return generate(positions: positions, boardString: boardString)
         }
         return nil
     }
     
-    func generate(boardString: String) -> String {
-        var i = Int.random(in: 0..<81)
-        while board[i] == nil {
-            i = Int.random(in: 0..<81)
-        }
-        if board[i] != nil {
+    func generate(positions: [Int?], boardString: String) -> String {
+        if positions.count>0 {
+            var modifiedPositions = positions
+            let i = positions[Int.random(in: 0..<positions.count)]
             var modifiedString = boardString
-            for j in [i,(80-i)] {
+            for j in [i!,(80-i!)] {
                 let num = board[j]
                 if let num = num {
                     modifiedString = String(modifiedString.prefix(j) + "_" + modifiedString.dropFirst(j + 1))
@@ -135,11 +134,15 @@ class Solver {
                     let y = j / 9
                     setValue(x: x, y: y, value: num, present: false)
                     board[j] = nil
+                    modifiedPositions = modifiedPositions.filter { $0 != j }
                 }
             }
             solutions.removeAll()
             if solve() {
-                return generate(boardString: modifiedString)
+                return generate(positions: modifiedPositions, boardString: modifiedString)
+            }else {
+                initializeBoard(boardString: boardString)
+                return generate(positions: modifiedPositions, boardString: boardString)
             }
         }
         return boardString
@@ -184,6 +187,16 @@ class Solver {
         return solved
     }
     
+    func getCandidates(_ x: Int, _ y: Int) -> [Int] {
+        var candidates : [Int] = []
+        for n in 1...9 {
+            if isValid(x: x, y: y, value: n) {
+                candidates.append(n)
+            }
+        }
+        return candidates
+    }
+
     func isValid(x: Int, y: Int, value: Int) -> Bool {
         let currentValue = value - 1
         

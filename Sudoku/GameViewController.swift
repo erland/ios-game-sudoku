@@ -56,7 +56,32 @@ class GameViewController: UIViewController, GameDelegate {
                 //board = Board(name: "Player", boardNumbers: "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7")
                 //board = Board(name: "Player", boardNumbers: "86793421554312679819258734692641385778465912331527896423174568965839147247986253_")
                 let repository = SudokuRepository()
-                var boardNumbers = repository.getBoard(difficulty: .Easy, level: 1)
+                //var boardNumbers = repository.getBoard(difficulty: .VeryHard, level: 1)
+                //var boardNumbers = "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7"
+                //var boardNumbers = "86793421554312679819258734692641385778465912331527896423174568965839147247986253_"
+                // naked pairs
+                //var boardNumbers = "597_4__3_348____6_612_9__8475____49_8_9____7_4__6___5_17__2_64_96__83_2_28_____1_"
+                // naked triples
+                //var boardNumbers = "__3_____1_9__35268__________7____18613_86_725286___943_41_8_3___5_2_6_1______3_7_"
+                // naked quad
+                var boardNumbers = "_9________28___9_6___7_9__2____26__43___1_________7__3_1_____59__4_8__31_82__1__7"
+                let solver = Solver(boardString: boardNumbers)
+                solver.printBoard()
+                if solver.solve() {
+                    print("Solved board")
+                    solver.initializeBoard(boardString: solver.solutions[0])
+                    solver.printBoard()
+                }
+                let calculator = DifficultyCalculator(boardString: boardNumbers)
+                if calculator.solve(techniques: [DifficultyCalculator.SingleCandidate(),DifficultyCalculator.SinglePosition(), DifficultyCalculator.CandidateLines(), DifficultyCalculator.NakedPairs(), DifficultyCalculator.NakedTriples(), DifficultyCalculator.NakedQuad()]) {
+                    print("Solved")
+                    calculator.printBoard()
+                }else {
+                    print("Not solved")
+                    calculator.printBoard()
+                }
+                boardNumbers = calculator.asString()
+                /*
                 while true {
                     let solver = Solver()
                     let str = solver.generate()
@@ -68,9 +93,8 @@ class GameViewController: UIViewController, GameDelegate {
                         }
                     }
                 }
-                board = Board(name: "Player", boardNumbers: boardNumbers)
-                /*
-                for _ in 0..<1000 {
+                
+                for _ in 0..<50 {
                     let solver = Solver()
                     let str = solver.generate()
                     if let str = str {
@@ -82,9 +106,19 @@ class GameViewController: UIViewController, GameDelegate {
                         }
                     }
                 }
- */
-
+ 
+                */
+                board = Board(name: "Player", boardNumbers: boardNumbers)
                 scene.setup(delegate: self, board: board!)
+                solver.initializeBoard(boardString: boardNumbers)
+                for y in 0..<9 {
+                    for x in 0..<9 {
+                        let candidates = solver.getCandidates(x, y)
+                        for c in candidates {
+                            board?.switchCandidateNumber(number: c, x: x, y: y)
+                        }
+                    }
+                }
                 /*
                  board.switchCandidateNumber(number: 1, x: 1, y: 1)
                  board.switchCandidateNumber(number: 2, x: 1, y: 1)

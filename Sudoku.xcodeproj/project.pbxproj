@@ -29,6 +29,7 @@
 		DC047FB022B41D5900A298AC /* SingleGameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC047FAF22B41D5900A298AC /* SingleGameOverScene.sks */; };
 		DC9DB5DD22B6143B00D54384 /* SudokuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */; };
 		DC9DB5DF22B61DEF00D54384 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5DE22B61DEF00D54384 /* Solver.swift */; };
+		DC9DB5E122B7F44300D54384 /* DifficultyCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5E022B7F44300D54384 /* DifficultyCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		DC047FAF22B41D5900A298AC /* SingleGameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SingleGameOverScene.sks; sourceTree = "<group>"; };
 		DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuRepository.swift; sourceTree = "<group>"; };
 		DC9DB5DE22B61DEF00D54384 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
+		DC9DB5E022B7F44300D54384 /* DifficultyCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				DC047FAF22B41D5900A298AC /* SingleGameOverScene.sks */,
 				DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */,
 				DC9DB5DE22B61DEF00D54384 /* Solver.swift */,
+				DC9DB5E022B7F44300D54384 /* DifficultyCalculator.swift */,
 			);
 			path = Sudoku;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			files = (
 				DC047FAC22B402EB00A298AC /* NumberPad.swift in Sources */,
 				DC047FA622B39B6000A298AC /* Number.swift in Sources */,
+				DC9DB5E122B7F44300D54384 /* DifficultyCalculator.swift in Sources */,
 				DC9DB5DD22B6143B00D54384 /* SudokuRepository.swift in Sources */,
 				DC047F9F22B395C400A298AC /* BoardView.swift in Sources */,
 				DC047FA222B3961C00A298AC /* SingleGameScene.swift in Sources */,
