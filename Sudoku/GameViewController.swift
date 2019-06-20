@@ -73,7 +73,8 @@ class GameViewController: UIViewController, GameDelegate {
                 //var boardNumbers = "5__62__37__489________5____93________2____6_57_______3_____9_________7__68_57___2"
                 // hidden quad
                 //var boardNumbers = "816573294392______4572_9__6941___5687854961236238___4_279_____1138____7_564____82"
-                var boardNumbers = "_3_____1___8_9____4__6_8______57694____98352____124___276__519____7_9____95___47_"
+                //var boardNumbers = "_3_____1___8_9____4__6_8______57694____98352____124___276__519____7_9____95___47_"
+                var boardNumbers = "857912__629134675834678519212456_9_376_____259_5_2_6_14126__5_767_25__1_5___7_26_"
                 let solver = Solver(boardString: boardNumbers)
                 solver.printBoard()
                 if solver.solve() {
@@ -83,8 +84,15 @@ class GameViewController: UIViewController, GameDelegate {
                 }
                 let calculator = DifficultyCalculator(boardString: boardNumbers)
                 if calculator.solve(techniques: [DifficultyCalculator.SingleCandidate(),
+                                                 DifficultyCalculator.SinglePosition(),
                                                  DifficultyCalculator.CandidateLines(),
-                                                 DifficultyCalculator.HiddenQuad()]) {
+                                                 DifficultyCalculator.NakedPairs(),
+                                                 DifficultyCalculator.NakedTriples(),
+                                                 DifficultyCalculator.NakedQuad(),
+                                                 DifficultyCalculator.HiddenPairs(),
+                                                 DifficultyCalculator.HiddenTriples(),
+                                                 DifficultyCalculator.HiddenPairs(),
+                                                 DifficultyCalculator.XWing()]) {
                     print("Solved")
                     calculator.printBoard()
                 }else {
