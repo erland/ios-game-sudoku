@@ -141,6 +141,7 @@ class DifficultyCalculator : BoardHandler {
         func solvePosition(board: BoardHandler, x: Int, y: Int) -> Bool {
             let candidates = board.candidatesAt(x, y)
             if candidates.count == 1 {
+                print("SingleCandidate \(candidates[0]) at \(x),\(y)")
                 board.setValue(x: x, y: y, value: candidates[0], present: true)
                 return true
             }
@@ -191,16 +192,18 @@ class DifficultyCalculator : BoardHandler {
                 return false
             }
             for num in candidates {
-                print("SinglePosition \(num) at \(x),\(y)")
                 if !isNumberInRow(board: board, num: num, x: x, y: y) {
+                    print("SinglePosition row \(num) at \(x),\(y)")
                     board.setValue(x: x, y: y, value: num, present: true)
                     return true
                 }
                 if !isNumberInColumn(board: board, num: num, x: x, y: y) {
+                    print("SinglePosition column \(num) at \(x),\(y)")
                     board.setValue(x: x, y: y, value: num, present: true)
                     return true
                 }
                 if !isNumberInSquare(board: board, num: num, x: x, y: y) {
+                    print("SinglePosition square \(num) at \(x),\(y)")
                     board.setValue(x: x, y: y, value: num, present: true)
                     return true
                 }
@@ -246,8 +249,8 @@ class DifficultyCalculator : BoardHandler {
             let candidates = board.candidatesAt(x, y)
             let currentSquare = board.squareOf(x, y)
             for num in candidates {
-                print("CandidateLines \(num)  at \(x),\(y)")
                 if !isNumberOutsideSquareRow(board: board, num: num, x: x, y: y) {
+                    print("CandidateLines row \(num)  at \(x),\(y)")
                     var removed = false
                     for column in 0..<9 {
                         let square = board.squareOf(column,y)
@@ -265,6 +268,7 @@ class DifficultyCalculator : BoardHandler {
                 }
                 
                 if !isNumberOutsideSquareColumn(board: board, num: num, x: x, y: y) {
+                    print("CandidateLines column \(num)  at \(x),\(y)")
                     var removed = false
                     for row in 0..<9 {
                         let square = board.squareOf(x,row)
@@ -318,8 +322,8 @@ class DifficultyCalculator : BoardHandler {
             let leftColumn = (square%3)*3
 
             for num in candidates {
-                print("MultiLine \(num)  at \(x),\(y)")
                 if isNumberOnlyInSquareRow(board: board, num: num, x: x, y: y) {
+                    print("MultiLine row \(num)  at \(x),\(y)")
                     var removed = false
                     for row in 0..<3 {
                         if topRow+row != y {
@@ -338,6 +342,7 @@ class DifficultyCalculator : BoardHandler {
                     }
                 }
                 if isNumberOnlyInSquareColumn(board: board, num: num, x: x, y: y) {
+                    print("MultiLine column \(num)  at \(x),\(y)")
                     var removed = false
                     for column in 0..<3 {
                         if leftColumn+column != x {
@@ -425,7 +430,7 @@ class DifficultyCalculator : BoardHandler {
                     if isMatch(candidates: cellCandidates, wanted: candidates) {
                         pairs.append(row)
                         if pairs.count == expectedCandidateCount {
-                            print("\(techniqueName()) \(cellCandidates)  at \(x),\(y)")
+                            print("\(techniqueName()) row \(cellCandidates)  at \(x),\(y)")
                             var removed = false
                             for removeRow in 0..<9 {
                                 if !pairs.contains(removeRow) {
@@ -452,7 +457,7 @@ class DifficultyCalculator : BoardHandler {
                     if isMatch(candidates: cellCandidates, wanted: candidates) {
                         pairs.append(column)
                         if pairs.count == expectedCandidateCount {
-                            print("\(techniqueName()) \(cellCandidates)  at \(x),\(y)")
+                            print("\(techniqueName()) column \(cellCandidates)  at \(x),\(y)")
                             var removed = false
                             for removeCol in 0..<9 {
                                 if !pairs.contains(removeCol) {
@@ -485,7 +490,7 @@ class DifficultyCalculator : BoardHandler {
                         if isMatch(candidates: cellCandidates, wanted: candidates) {
                             pairs.append((topRow+row)*9+(leftColumn+column))
                             if pairs.count == expectedCandidateCount {
-                                print("\(techniqueName()) \(cellCandidates)  at \(x),\(y)")
+                                print("\(techniqueName()) square \(cellCandidates)  at \(x),\(y)")
                                 var removed = false
                                 for removeRow in 0..<3 {
                                     for removeCol in 0..<3 {
@@ -508,6 +513,426 @@ class DifficultyCalculator : BoardHandler {
                     }
                 }
             }
+            return false
+        }
+    }
+
+    class HiddenPairs : SolverTechnique {
+        let expectedCandidateCount : Int
+        init(expectedCandidateCount: Int = 2) {
+            self.expectedCandidateCount = expectedCandidateCount
+        }
+        
+        func isRowCandidate(board: BoardHandler, x: Int, y: Int, num: Int) -> Bool {
+            var count = 1
+            for col in 0..<9 {
+                if col != x {
+                    if board.candidatesAt(col, y).contains(num) {
+                        count = count + 1
+                    }
+                }
+            }
+            return count == expectedCandidateCount
+        }
+        
+        func isFullRowCandidate(board: BoardHandler, y: Int, wanted: [Int]) -> Bool {
+            var count = 0
+            for col in 0..<9 {
+                let candidates = board.candidatesAt(col, y)
+                var match = true
+                for num in wanted {
+                    if !candidates.contains(num) {
+                        match = false
+                        break
+                    }
+                }
+                if match {
+                    count = count + 1
+                }
+            }
+            return count == expectedCandidateCount
+        }
+
+        func isColumnCandidate(board: BoardHandler, x: Int, y: Int, num: Int) -> Bool {
+            var count = 1
+            for row in 0..<9 {
+                if row != y {
+                    if board.candidatesAt(x, row).contains(num) {
+                        count = count + 1
+                    }
+                }
+            }
+            return count == expectedCandidateCount
+        }
+        
+
+        func isFullColumnCandidate(board: BoardHandler, x: Int, wanted: [Int]) -> Bool {
+            var count = 0
+            for row in 0..<9 {
+                let candidates = board.candidatesAt(x, row)
+                var match = true
+                for num in wanted {
+                    if !candidates.contains(num) {
+                        match = false
+                        break
+                    }
+                }
+                if match {
+                    count = count + 1
+                }
+            }
+            return count == expectedCandidateCount
+        }
+
+        func isSquareCandidate(board: BoardHandler, x: Int, y: Int, num: Int) -> Bool {
+            var count = 1
+            let square = board.squareOf(x, y)
+            let topRow = Int(square/3)*3
+            let leftColumn = (square%3)*3
+            for row in 0..<3 {
+                for col in 0..<3 {
+                    if row+topRow != y || col+leftColumn != x {
+                        if board.candidatesAt(col+leftColumn,row+topRow).contains(num) {
+                            count = count + 1
+                        }
+                    }
+                }
+            }
+            return count == expectedCandidateCount
+        }
+
+        
+        func isFullSquareCandidate(board: BoardHandler, x: Int, y: Int, wanted: [Int]) -> Bool {
+            var count = 0
+            let square = board.squareOf(x, y)
+            let topRow = Int(square/3)*3
+            let leftColumn = (square%3)*3
+            for row in 0..<3 {
+                for col in 0..<3 {
+                    let candidates = board.candidatesAt(leftColumn+col, topRow+row)
+                    var match = true
+                    for num in wanted {
+                        if !candidates.contains(num) {
+                            match = false
+                            break
+                        }
+                    }
+                    if match {
+                        count = count + 1
+                    }
+                }
+            }
+            return count == expectedCandidateCount
+        }
+
+        func techniqueName() -> String {
+            return "HiddenPair"
+        }
+        func solvePosition(board: BoardHandler, x: Int, y: Int) -> Bool {
+            let candidates = board.candidatesAt(x, y)
+            
+            var potentials : [Int] = []
+            for c in candidates {
+                if isRowCandidate(board: board, x:x, y:y, num: c) {
+                    potentials.append(c)
+                }
+            }
+            if potentials.count>1 {
+                var result = false
+                for p1 in potentials {
+                    for p2 in potentials {
+                        if p2 != p1 {
+                            if isFullRowCandidate(board: board, y: y, wanted: [p1,p2]) {
+                                print("\(techniqueName()) row \([p1,p2])  at \(x),\(y)")
+                                for col in 0..<9 {
+                                    let numbers = board.candidatesAt(col, y)
+                                    if numbers.contains(p1) && numbers.contains(p2) {
+                                        for n in numbers {
+                                            if n != p1 && n != p2 {
+                                                print("Removing \(n) from \(col),\(y)")
+                                                board.removeCandidate(x: col, y: y, value: n)
+                                                result = true
+                                            }
+                                        }
+                                    }
+                                }
+                                if result {
+                                    return true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            potentials = []
+            for c in candidates {
+                if isColumnCandidate(board: board, x:x, y:y, num: c) {
+                    potentials.append(c)
+                }
+            }
+            if potentials.count>1 {
+                var result = false
+                for p1 in potentials {
+                    for p2 in potentials {
+                        if p2 != p1 {
+                            if isFullColumnCandidate(board: board, x: x, wanted: [p1,p2]) {
+                                print("\(techniqueName()) column \([p1,p2])  at \(x),\(y)")
+                                for row in 0..<9 {
+                                    let numbers = board.candidatesAt(x, row)
+                                    if numbers.contains(p1) && numbers.contains(p2) {
+                                        for n in numbers {
+                                            if n != p1 && n != p2 {
+                                                print("Removing \(n) from \(x),\(row)")
+                                                board.removeCandidate(x: x, y: row, value: n)
+                                                result = true
+                                            }
+                                        }
+                                    }
+                                }
+                                if result {
+                                    return true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            potentials = []
+            for c in candidates {
+                if isSquareCandidate(board: board, x:x, y:y, num: c) {
+                    potentials.append(c)
+                }
+            }
+            if potentials.count>1 {
+                var result = false
+                for p1 in potentials {
+                    for p2 in potentials {
+                        if p2 != p1 {
+                            if isFullSquareCandidate(board: board, x: x, y: y, wanted: [p1,p2]) {
+                                print("\(techniqueName()) square \([p1,p2])  at \(x),\(y)")
+                                let square = board.squareOf(x, y)
+                                let topRow = Int(square/3)*3
+                                let leftColumn = (square%3)*3
+                                for row in 0..<3 {
+                                    for col in 0..<3 {
+                                        let numbers = board.candidatesAt(leftColumn+col, topRow+row)
+                                        if numbers.contains(p1) && numbers.contains(p2) {
+                                            for n in numbers {
+                                                if n != p1 && n != p2 {
+                                                    print("Removing \(n) from \(leftColumn+col),\(topRow+row)")
+                                                    board.removeCandidate(x: leftColumn+col, y: topRow+row, value: n)
+                                                    result = true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if result {
+                                    return true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false
+        }
+    }
+
+    class HiddenTriples : SolverTechnique {
+        let expectedCandidateCount : Int
+        init(expectedCandidateCount: Int = 3) {
+            self.expectedCandidateCount = expectedCandidateCount
+        }
+        
+        func rowOccurrences(board: BoardHandler, y: Int, num: Int) -> [Int] {
+            var result : [Int] = []
+            for col in 0..<9 {
+                if board.candidatesAt(col, y).contains(num) {
+                    result.append(col)
+                }
+            }
+            return result
+        }
+
+        func columnOccurrences(board: BoardHandler, x: Int, num: Int) -> [Int] {
+            var result : [Int] = []
+            for row in 0..<9 {
+                if board.candidatesAt(x, row).contains(num) {
+                    result.append(row)
+                }
+            }
+            return result
+        }
+
+        func squareOccurrences(board: BoardHandler, x: Int, y: Int, num: Int) -> [Int] {
+            var result : [Int] = []
+            let square = board.squareOf(x, y)
+            let topRow = Int(square/3)*3
+            let leftColumn = (square%3)*3
+            for row in 0..<3 {
+                for col in 0..<3 {
+                    if board.candidatesAt(leftColumn+col, topRow+row).contains(num) {
+                        result.append((topRow+row)*9+leftColumn+col)
+                    }
+                }
+            }
+            return result
+        }
+
+        
+        func techniqueName() -> String {
+            return "HiddenTriples"
+        }
+        func solvePosition(board: BoardHandler, x: Int, y: Int) -> Bool {
+            let candidates = board.candidatesAt(x, y)
+            
+            var potentialsPos : [[Int]] = [[],[],[],[],[],[],[],[],[]]
+            var potentials : [Int] = []
+            for c in candidates {
+                let occurrences = rowOccurrences(board: board, y:y, num: c)
+                if occurrences.count>1 && occurrences.count <= expectedCandidateCount {
+                    potentialsPos[c-1] = occurrences
+                    potentials.append(c)
+                }
+            }
+            
+            for p1 in potentials {
+                for p2 in potentials {
+                    if p1 != p2 {
+                        for p3 in potentials {
+                            if p2 != p3 && p1 != p3 {
+                                var combined : Set<Int> = []
+                                for p in potentialsPos[p1-1] {
+                                    combined.insert(p)
+                                }
+                                for p in potentialsPos[p2-1] {
+                                    combined.insert(p)
+                                }
+                                for p in potentialsPos[p3-1] {
+                                    combined.insert(p)
+                                }
+                                if combined.count == 3 {
+                                    print("\(techniqueName()) row \([p1,p2,p3])  at \(x),\(y)")
+                                    var removed = false
+                                    for pos in combined {
+                                        for c in board.candidatesAt(pos, y) {
+                                            if (c != p1) && (c != p2) && (c != p3) {
+                                                print("Removing \(c) from \(pos),\(y)")
+                                                board.removeCandidate(x: pos, y: y, value: c)
+                                                removed = true
+                                            }
+                                        }
+                                    }
+                                    if removed {
+                                        return true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            potentialsPos = [[],[],[],[],[],[],[],[],[]]
+            potentials = []
+            for c in candidates {
+                let occurrences = columnOccurrences(board: board, x:x, num: c)
+                if occurrences.count>1 && occurrences.count <= expectedCandidateCount {
+                    potentialsPos[c-1] = occurrences
+                    potentials.append(c)
+                }
+            }
+            
+            for p1 in potentials {
+                for p2 in potentials {
+                    if p1 != p2 {
+                        for p3 in potentials {
+                            if p2 != p3 && p1 != p3 {
+                                var combined : Set<Int> = []
+                                for p in potentialsPos[p1-1] {
+                                    combined.insert(p)
+                                }
+                                for p in potentialsPos[p2-1] {
+                                    combined.insert(p)
+                                }
+                                for p in potentialsPos[p3-1] {
+                                    combined.insert(p)
+                                }
+                                if combined.count == 3 {
+                                    print("\(techniqueName()) column \([p1,p2,p3])  at \(x),\(y)")
+                                    var removed = false
+                                    for pos in combined {
+                                        for c in board.candidatesAt(x, pos) {
+                                            if (c != p1) && (c != p2) && (c != p3) {
+                                                print("Removing \(c) from \(x),\(pos)")
+                                                board.removeCandidate(x: x, y: pos, value: c)
+                                                removed = true
+                                            }
+                                        }
+                                    }
+                                    if removed {
+                                        return true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            potentialsPos = [[],[],[],[],[],[],[],[],[]]
+            potentials = []
+            for c in candidates {
+                let occurrences = squareOccurrences(board: board, x:x, y:y, num: c)
+                if occurrences.count>1 && occurrences.count <= expectedCandidateCount {
+                    potentialsPos[c-1] = occurrences
+                    potentials.append(c)
+                }
+            }
+            
+            for p1 in potentials {
+                for p2 in potentials {
+                    if p1 != p2 {
+                        for p3 in potentials {
+                            if p2 != p3 && p1 != p3 {
+                                var combined : Set<Int> = []
+                                for p in potentialsPos[p1-1] {
+                                    combined.insert(p)
+                                }
+                                for p in potentialsPos[p2-1] {
+                                    combined.insert(p)
+                                }
+                                for p in potentialsPos[p3-1] {
+                                    combined.insert(p)
+                                }
+                                if combined.count == 3 {
+                                    print("\(techniqueName()) square \([p1,p2,p3])  at \(x),\(y)")
+                                    var removed = false
+                                    for pos in combined {
+                                        let posX = Int(pos%9)
+                                        let posY = Int(pos/9)
+                                        for c in board.candidatesAt(posX, posY) {
+                                            if (c != p1) && (c != p2) && (c != p3) {
+                                                print("Removing \(c) from \(posX),\(posY)")
+                                                board.removeCandidate(x: posX, y: posY, value: c)
+                                                removed = true
+                                            }
+                                        }
+                                    }
+                                    if removed {
+                                        return true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             return false
         }
     }

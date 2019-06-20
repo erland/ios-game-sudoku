@@ -64,7 +64,13 @@ class GameViewController: UIViewController, GameDelegate {
                 // naked triples
                 //var boardNumbers = "__3_____1_9__35268__________7____18613_86_725286___943_41_8_3___5_2_6_1______3_7_"
                 // naked quad
-                var boardNumbers = "_9________28___9_6___7_9__2____26__43___1_________7__3_1_____59__4_8__31_82__1__7"
+                //var boardNumbers = "_9________28___9_6___7_9__2____26__43___1_________7__3_1_____59__4_8__31_82__1__7"
+                // hidden pair
+                //var boardNumbers = "_________9_46_7____768_41__3_97_1_8_7_8___3_1_513_87_2__75_261___54_32_8_________"
+                //var boardNumbers = "72_4_8_3__8_____474_1_768_281_739______851______264_8_2_968_41334______8168943275"
+                // hidden triples
+                //var boardNumbers = "28____473534827196_71_34_8_3__5___4____34__6_46_79_31__9_2_3654__3__9821____8_937"
+                var boardNumbers = "5__62__37__489________5____93________2____6_57_______3_____9_________7__68_57___2"
                 let solver = Solver(boardString: boardNumbers)
                 solver.printBoard()
                 if solver.solve() {
@@ -73,7 +79,14 @@ class GameViewController: UIViewController, GameDelegate {
                     solver.printBoard()
                 }
                 let calculator = DifficultyCalculator(boardString: boardNumbers)
-                if calculator.solve(techniques: [DifficultyCalculator.SingleCandidate(),DifficultyCalculator.SinglePosition(), DifficultyCalculator.CandidateLines(), DifficultyCalculator.NakedPairs(), DifficultyCalculator.NakedTriples(), DifficultyCalculator.NakedQuad()]) {
+                if calculator.solve(techniques: [DifficultyCalculator.SingleCandidate(),
+                                                 DifficultyCalculator.SinglePosition(),
+                                                 DifficultyCalculator.CandidateLines(),
+                                                 DifficultyCalculator.NakedPairs(),
+                                                 DifficultyCalculator.NakedTriples(),
+                                                 DifficultyCalculator.NakedQuad(),
+                                                 DifficultyCalculator.HiddenPairs(),
+                                                 DifficultyCalculator.HiddenTriples()]) {
                     print("Solved")
                     calculator.printBoard()
                 }else {
