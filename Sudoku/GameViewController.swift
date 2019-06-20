@@ -70,7 +70,10 @@ class GameViewController: UIViewController, GameDelegate {
                 //var boardNumbers = "72_4_8_3__8_____474_1_768_281_739______851______264_8_2_968_41334______8168943275"
                 // hidden triples
                 //var boardNumbers = "28____473534827196_71_34_8_3__5___4____34__6_46_79_31__9_2_3654__3__9821____8_937"
-                var boardNumbers = "5__62__37__489________5____93________2____6_57_______3_____9_________7__68_57___2"
+                //var boardNumbers = "5__62__37__489________5____93________2____6_57_______3_____9_________7__68_57___2"
+                // hidden quad
+                //var boardNumbers = "816573294392______4572_9__6941___5687854961236238___4_279_____1138____7_564____82"
+                var boardNumbers = "_3_____1___8_9____4__6_8______57694____98352____124___276__519____7_9____95___47_"
                 let solver = Solver(boardString: boardNumbers)
                 solver.printBoard()
                 if solver.solve() {
@@ -80,13 +83,8 @@ class GameViewController: UIViewController, GameDelegate {
                 }
                 let calculator = DifficultyCalculator(boardString: boardNumbers)
                 if calculator.solve(techniques: [DifficultyCalculator.SingleCandidate(),
-                                                 DifficultyCalculator.SinglePosition(),
                                                  DifficultyCalculator.CandidateLines(),
-                                                 DifficultyCalculator.NakedPairs(),
-                                                 DifficultyCalculator.NakedTriples(),
-                                                 DifficultyCalculator.NakedQuad(),
-                                                 DifficultyCalculator.HiddenPairs(),
-                                                 DifficultyCalculator.HiddenTriples()]) {
+                                                 DifficultyCalculator.HiddenQuad()]) {
                     print("Solved")
                     calculator.printBoard()
                 }else {
