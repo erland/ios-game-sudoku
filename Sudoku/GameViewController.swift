@@ -83,16 +83,17 @@ class GameViewController: UIViewController, GameDelegate {
                     solver.printBoard()
                 }
                 let calculator = DifficultyCalculator(boardString: boardNumbers)
-                if calculator.solve(techniques: [DifficultyCalculator.SingleCandidate(),
-                                                 DifficultyCalculator.SinglePosition(),
-                                                 DifficultyCalculator.CandidateLines(),
-                                                 DifficultyCalculator.NakedPairs(),
-                                                 DifficultyCalculator.NakedTriples(),
-                                                 DifficultyCalculator.NakedQuad(),
-                                                 DifficultyCalculator.HiddenPairs(),
-                                                 DifficultyCalculator.HiddenTriples(),
-                                                 DifficultyCalculator.HiddenPairs(),
-                                                 DifficultyCalculator.XWing()]) {
+                if calculator.solve(techniques: [SingleCandidate(),
+                                                 SinglePosition(),
+                                                 CandidateLines(),
+                                                 MultipleLines(),
+                                                 NakedPairs(),
+                                                 NakedTriples(),
+                                                 NakedQuads(),
+                                                 HiddenPairs(),
+                                                 HiddenTriples(),
+                                                 HiddenQuads(),
+                                                 XWing()]) {
                     print("Solved")
                     calculator.printBoard()
                 }else {
@@ -101,32 +102,26 @@ class GameViewController: UIViewController, GameDelegate {
                 }
                 boardNumbers = calculator.asString()
                 /*
-                while true {
-                    let solver = Solver()
-                    let str = solver.generate()
-                    if let str = str {
-                        let count = str.characters.filter { $0 == "_" }.count
-                        if count>51 {
-                            boardNumbers = str
-                            break
-                        }
-                    }
-                }
-                
                 for _ in 0..<50 {
                     let solver = Solver()
                     let str = solver.generate()
                     if let str = str {
                         let count = str.characters.filter { $0 == "_" }.count
                         if count>50 {
-                            print("Board with: \(81-count) numbers")
-                            solver.initializeBoard(boardString: str)
-                            solver.printBoard()
+                            let calculator = DifficultyCalculator(boardString: str)
+                            if calculator.solve(techniques: [SingleCandidate(),
+                                                             SinglePosition()]) {
+                                print("Board with: \(81-count) numbers")
+                                solver.initializeBoard(boardString: str)
+                                solver.printBoard()
+                            }else {
+                                print("Board with: \(81-count) numbers to hard")
+                            }
                         }
                     }
                 }
- 
                 */
+                
                 board = Board(name: "Player", boardNumbers: boardNumbers)
                 scene.setup(delegate: self, board: board!)
                 solver.initializeBoard(boardString: boardNumbers)

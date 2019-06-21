@@ -30,6 +30,19 @@
 		DC9DB5DD22B6143B00D54384 /* SudokuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */; };
 		DC9DB5DF22B61DEF00D54384 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5DE22B61DEF00D54384 /* Solver.swift */; };
 		DC9DB5E122B7F44300D54384 /* DifficultyCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5E022B7F44300D54384 /* DifficultyCalculator.swift */; };
+		DC9DB5E422BCB4FD00D54384 /* SingleCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5E322BCB4FD00D54384 /* SingleCandidate.swift */; };
+		DC9DB5E622BCB52000D54384 /* SinglePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5E522BCB52000D54384 /* SinglePosition.swift */; };
+		DC9DB5E822BCB54900D54384 /* CandidateLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5E722BCB54900D54384 /* CandidateLines.swift */; };
+		DC9DB5EA22BCB56A00D54384 /* MultipleLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5E922BCB56A00D54384 /* MultipleLines.swift */; };
+		DC9DB5EC22BCB58A00D54384 /* NakedTriple.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5EB22BCB58A00D54384 /* NakedTriple.swift */; };
+		DC9DB5EE22BCB5A300D54384 /* NakedQuads.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5ED22BCB5A300D54384 /* NakedQuads.swift */; };
+		DC9DB5F022BCB5BE00D54384 /* NakedPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5EF22BCB5BE00D54384 /* NakedPairs.swift */; };
+		DC9DB5F222BCB5EF00D54384 /* HiddenPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F122BCB5EF00D54384 /* HiddenPairs.swift */; };
+		DC9DB5F422BCB61E00D54384 /* HiddenTriples.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F322BCB61E00D54384 /* HiddenTriples.swift */; };
+		DC9DB5F622BCB64000D54384 /* HiddenQuads.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F522BCB64000D54384 /* HiddenQuads.swift */; };
+		DC9DB5F822BCB65E00D54384 /* XWing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F722BCB65E00D54384 /* XWing.swift */; };
+		DC9DB5FA22BCB67700D54384 /* SolverTechnique.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F922BCB67700D54384 /* SolverTechnique.swift */; };
+		DC9DB5FC22BCB69300D54384 /* BoardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5FB22BCB69300D54384 /* BoardHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +71,19 @@
 		DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuRepository.swift; sourceTree = "<group>"; };
 		DC9DB5DE22B61DEF00D54384 /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
 		DC9DB5E022B7F44300D54384 /* DifficultyCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyCalculator.swift; sourceTree = "<group>"; };
+		DC9DB5E322BCB4FD00D54384 /* SingleCandidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCandidate.swift; sourceTree = "<group>"; };
+		DC9DB5E522BCB52000D54384 /* SinglePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePosition.swift; sourceTree = "<group>"; };
+		DC9DB5E722BCB54900D54384 /* CandidateLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateLines.swift; sourceTree = "<group>"; };
+		DC9DB5E922BCB56A00D54384 /* MultipleLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleLines.swift; sourceTree = "<group>"; };
+		DC9DB5EB22BCB58A00D54384 /* NakedTriple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NakedTriple.swift; sourceTree = "<group>"; };
+		DC9DB5ED22BCB5A300D54384 /* NakedQuads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NakedQuads.swift; sourceTree = "<group>"; };
+		DC9DB5EF22BCB5BE00D54384 /* NakedPairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NakedPairs.swift; sourceTree = "<group>"; };
+		DC9DB5F122BCB5EF00D54384 /* HiddenPairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenPairs.swift; sourceTree = "<group>"; };
+		DC9DB5F322BCB61E00D54384 /* HiddenTriples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenTriples.swift; sourceTree = "<group>"; };
+		DC9DB5F522BCB64000D54384 /* HiddenQuads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenQuads.swift; sourceTree = "<group>"; };
+		DC9DB5F722BCB65E00D54384 /* XWing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWing.swift; sourceTree = "<group>"; };
+		DC9DB5F922BCB67700D54384 /* SolverTechnique.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolverTechnique.swift; sourceTree = "<group>"; };
+		DC9DB5FB22BCB69300D54384 /* BoardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +116,7 @@
 		DC047F7C22B3941400A298AC /* Sudoku */ = {
 			isa = PBXGroup;
 			children = (
+				DC9DB5E222BCB4DB00D54384 /* SolutionTechniques */,
 				DC047F9622B395C400A298AC /* Array2D.swift */,
 				DC047F9A22B395C400A298AC /* Board.swift */,
 				DC047F9922B395C400A298AC /* BoardView.swift */,
@@ -116,6 +143,26 @@
 				DC9DB5E022B7F44300D54384 /* DifficultyCalculator.swift */,
 			);
 			path = Sudoku;
+			sourceTree = "<group>";
+		};
+		DC9DB5E222BCB4DB00D54384 /* SolutionTechniques */ = {
+			isa = PBXGroup;
+			children = (
+				DC9DB5E322BCB4FD00D54384 /* SingleCandidate.swift */,
+				DC9DB5E522BCB52000D54384 /* SinglePosition.swift */,
+				DC9DB5E722BCB54900D54384 /* CandidateLines.swift */,
+				DC9DB5E922BCB56A00D54384 /* MultipleLines.swift */,
+				DC9DB5EB22BCB58A00D54384 /* NakedTriple.swift */,
+				DC9DB5ED22BCB5A300D54384 /* NakedQuads.swift */,
+				DC9DB5EF22BCB5BE00D54384 /* NakedPairs.swift */,
+				DC9DB5F122BCB5EF00D54384 /* HiddenPairs.swift */,
+				DC9DB5F322BCB61E00D54384 /* HiddenTriples.swift */,
+				DC9DB5F522BCB64000D54384 /* HiddenQuads.swift */,
+				DC9DB5F722BCB65E00D54384 /* XWing.swift */,
+				DC9DB5F922BCB67700D54384 /* SolverTechnique.swift */,
+				DC9DB5FB22BCB69300D54384 /* BoardHandler.swift */,
+			);
+			path = SolutionTechniques;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,22 +240,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC9DB5E822BCB54900D54384 /* CandidateLines.swift in Sources */,
 				DC047FAC22B402EB00A298AC /* NumberPad.swift in Sources */,
+				DC9DB5EE22BCB5A300D54384 /* NakedQuads.swift in Sources */,
 				DC047FA622B39B6000A298AC /* Number.swift in Sources */,
 				DC9DB5E122B7F44300D54384 /* DifficultyCalculator.swift in Sources */,
+				DC9DB5F422BCB61E00D54384 /* HiddenTriples.swift in Sources */,
 				DC9DB5DD22B6143B00D54384 /* SudokuRepository.swift in Sources */,
+				DC9DB5E422BCB4FD00D54384 /* SingleCandidate.swift in Sources */,
 				DC047F9F22B395C400A298AC /* BoardView.swift in Sources */,
 				DC047FA222B3961C00A298AC /* SingleGameScene.swift in Sources */,
 				DC9DB5DF22B61DEF00D54384 /* Solver.swift in Sources */,
+				DC9DB5FC22BCB69300D54384 /* BoardHandler.swift in Sources */,
 				DC047FA822B39E2D00A298AC /* NumberView.swift in Sources */,
 				DC047F9D22B395C400A298AC /* LocalNetworking.swift in Sources */,
 				DC047F8622B3941400A298AC /* GameViewController.swift in Sources */,
 				DC047F7E22B3941400A298AC /* AppDelegate.swift in Sources */,
+				DC9DB5EA22BCB56A00D54384 /* MultipleLines.swift in Sources */,
+				DC9DB5E622BCB52000D54384 /* SinglePosition.swift in Sources */,
 				DC047F9B22B395C400A298AC /* MatchMakingScene.swift in Sources */,
 				DC047FAE22B41C0F00A298AC /* SingleGameOverScene.swift in Sources */,
+				DC9DB5F822BCB65E00D54384 /* XWing.swift in Sources */,
 				DC047FA022B395C400A298AC /* Board.swift in Sources */,
+				DC9DB5F622BCB64000D54384 /* HiddenQuads.swift in Sources */,
 				DC047F9C22B395C400A298AC /* Array2D.swift in Sources */,
+				DC9DB5F022BCB5BE00D54384 /* NakedPairs.swift in Sources */,
 				DC047FAA22B3A08100A298AC /* GameDelegate.swift in Sources */,
+				DC9DB5FA22BCB67700D54384 /* SolverTechnique.swift in Sources */,
+				DC9DB5EC22BCB58A00D54384 /* NakedTriple.swift in Sources */,
+				DC9DB5F222BCB5EF00D54384 /* HiddenPairs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
