@@ -1,33 +1,36 @@
 //
-//  DifficultyCalculator.swift
+//  AbstractSolverBoard.swift
 //  Sudoku
 //
-//  Created by Erland Isaksson on 2019-06-17.
+//  Created by Erland Isaksson on 2019-06-22.
 //  Copyright © 2019 Erland Isaksson. All rights reserved.
 //
 
-import Foundation
-
-
-class DifficultyCalculator : BoardHandler {
+class AbstractSolverBoard : BoardHandler {
     var board: Array<Int?>
-    var candidates: Array<Array<Int>>
+    var candidates: Array<Array<Int>>?
     var rows: Array<Array<Bool>>
     var columns: Array<Array<Bool>>
     var squares: Array<Array<Bool>>
-    
-    init(boardString: String) {
+    let debug: Bool
+
+    init(boardString: String, debug: Bool = true, candidates: Bool = true) {
+        self.debug = debug
         board = Array<Int?>(repeating: nil, count:9 * 9)
-        candidates = Array<Array<Int>>(repeating: Array<Int>(), count: 9*9)
+        if candidates {
+            self.candidates = Array<Array<Int>>(repeating: Array<Int>(), count: 9*9)
+        }
         rows = Array<Array<Bool>>(repeating: Array<Bool>(repeating: false, count: 9), count: 9)
         columns = Array<Array<Bool>>(repeating: Array<Bool>(repeating: false, count: 9), count: 9)
         squares = Array<Array<Bool>>(repeating: Array<Bool>(repeating: false, count: 9), count: 9)
         initializeBoard(boardString: boardString)
     }
-    
+
     func initializeBoard(boardString: String) {
         board = Array<Int?>(repeating: nil, count:9 * 9)
-        candidates = Array<Array<Int>>(repeating: Array<Int>(), count: 9*9)
+        if candidates != nil {
+            candidates = Array<Array<Int>>(repeating: Array<Int>(), count: 9*9)
+        }
         rows = Array<Array<Bool>>(repeating: Array<Bool>(repeating: false, count: 9), count: 9)
         columns = Array<Array<Bool>>(repeating: Array<Bool>(repeating: false, count: 9), count: 9)
         squares = Array<Array<Bool>>(repeating: Array<Bool>(repeating: false, count: 9), count: 9)
@@ -47,7 +50,7 @@ class DifficultyCalculator : BoardHandler {
         }
         
     }
-    
+
     func asString() -> String {
         var result = ""
         for i in 0..<81 {
@@ -59,7 +62,7 @@ class DifficultyCalculator : BoardHandler {
         }
         return result
     }
-
+    
     func squareOf(_ x:Int, _ y:Int) -> Int {
         let squareRow = y / 3
         let squareColumn = x / 3
@@ -72,28 +75,38 @@ class DifficultyCalculator : BoardHandler {
         rows[y][value - 1] = present
         columns[x][value - 1] = present
         squares[squareOf(x,y)][value - 1] = present
-        print("Setting \(value) at \(x),\(y)")
-        candidates[y*9+x] = []
-        for row in 0..<9 {
-            if candidates[row*9+x].contains(value) {
-                print("Removing \(value) from \(x),\(row)")
-                candidates[row*9+x] = candidates[row*9+x].filter({$0 != value})
-            }
+        if debug {
+            print("Setting \(value) at \(x),\(y)")
         }
-        for column in 0..<9 {
-            if candidates[y*9+column].contains(value) {
-                print("Removing \(value) from \(column),\(y)")
-                candidates[y*9+column] = candidates[y*9+column].filter({$0 != value})
+        if candidates != nil {
+            candidates![y*9+x] = []
+            for row in 0..<9 {
+                if candidates![row*9+x].contains(value) {
+                    if debug {
+                        print("Removing \(value) from \(x),\(row)")
+                    }
+                    candidates![row*9+x] = candidates![row*9+x].filter({$0 != value})
+                }
             }
-        }
-        let square = squareOf(x, y)
-        let topRow = Int(square/3)*3
-        let leftColumn = (square%3)*3
-        for row in 0..<3 {
-            for column in 0..<3 {
-                if candidates[(topRow+row)*9+(leftColumn+column)].contains(value) {
-                    print("Removing \(value) from \(leftColumn+column),\(topRow+row)")
-                    candidates[(topRow+row)*9+(leftColumn+column)] = candidates[(topRow+row)*9+(leftColumn+column)].filter({$0 != value})
+            for column in 0..<9 {
+                if candidates![y*9+column].contains(value) {
+                    if debug {
+                        print("Removing \(value) from \(column),\(y)")
+                    }
+                    candidates![y*9+column] = candidates![y*9+column].filter({$0 != value})
+                }
+            }
+            let square = squareOf(x, y)
+            let topRow = Int(square/3)*3
+            let leftColumn = (square%3)*3
+            for row in 0..<3 {
+                for column in 0..<3 {
+                    if candidates![(topRow+row)*9+(leftColumn+column)].contains(value) {
+                        if debug {
+                            print("Removing \(value) from \(leftColumn+column),\(topRow+row)")
+                        }
+                        candidates![(topRow+row)*9+(leftColumn+column)] = candidates![(topRow+row)*9+(leftColumn+column)].filter({$0 != value})
+                    }
                 }
             }
         }
@@ -126,53 +139,29 @@ class DifficultyCalculator : BoardHandler {
     }
     
     func candidatesAt(_ x: Int, _ y: Int) -> [Int] {
-        return candidates[y*9+x]
-    }
-    func removeCandidate(x: Int, y: Int, value: Int) {
-        candidates[y*9+x] = candidates[y*9+x].filter({$0 != value})
+        if candidates != nil {
+            return candidates![y*9+x]
+        }else {
+            return []
+        }
     }
 
-    func solve(techniques: [SolverTechnique]) -> Bool {
-        resetCandidates()
-        var makesProgress = true
-        while makesProgress {
-            makesProgress = false
-            for t in techniques {
-                if solve(technique: t) {
-                    makesProgress = true
-                    break
-                }
-            }
+    func removeCandidate(x: Int, y: Int, value: Int) {
+        if candidates != nil {
+            candidates![y*9+x] = candidates![y*9+x].filter({$0 != value})
         }
-        for i in 0..<81 {
-            if board[i] == nil {
-                return false
-            }
-        }
-        return true
     }
-    
-    func solve(technique: SolverTechnique) -> Bool {
-        for y in 0..<9 {
-            for x in 0..<9 {
-                if board[y*9+x] == nil {
-                    if technique.solvePosition(board: self, x: x, y: y) {
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
-    
+
     func resetCandidates() {
-        candidates = Array<Array<Int>>(repeating: Array<Int>(), count: 81)
-        for y in 0..<9 {
-            for x in 0..<9 {
-                if board[y*9+x] == nil {
-                    for n in 1...9 {
-                        if isValid(x: x, y: y, value: n) {
-                            candidates[y*9+x].append(n)
+        if candidates != nil {
+            candidates = Array<Array<Int>>(repeating: Array<Int>(), count: 81)
+            for y in 0..<9 {
+                for x in 0..<9 {
+                    if board[y*9+x] == nil {
+                        for n in 1...9 {
+                            if isValid(x: x, y: y, value: n) {
+                                candidates![y*9+x].append(n)
+                            }
                         }
                     }
                 }

@@ -23,6 +23,7 @@ class BoardView : SKSpriteNode, BoardObserver {
     var cellSize: CGFloat?
     var scale: CGFloat?
     var selectedCell : SKShapeNode?
+    var solverCells : [SKShapeNode] = []
     
     func setup(board: Board) {
         self.cellSize = size.width/CGFloat(board.width)
@@ -97,30 +98,62 @@ class BoardView : SKSpriteNode, BoardObserver {
     }
 
     func select(position: CGPoint) ->  IntPosition? {
-        if selectedCell != nil {
-            selectedCell?.removeFromParent()
-            selectedCell = nil
-        }
         if self.contains(position) {
             let x = Int((position.x-self.position.x)/cellSize!)
             let y = -Int((position.y-self.position.y)/cellSize!)
-            selectedCell = SKShapeNode(rectOf: CGSize(width: cellSize!, height: cellSize!), cornerRadius: cellSize!/8)
-            selectedCell?.strokeColor = .orange
-            selectedCell?.lineWidth = 5
-            selectedCell?.position.x = CGFloat(x)*cellSize!+cellSize!/2
-            selectedCell?.position.y = -CGFloat(y)*cellSize!-cellSize!/2
-            selectedCell?.zPosition = 20
-            if let n = board?.atPosition(x,y) {
-                if n.permanent {
-                    selectedCell?.strokeColor = .gray
-                }
-            }
-            addChild(selectedCell!)
+            select(x: x, y: y)
             return IntPosition(x,y)
         }
         return nil
     }
+    func select(x: Int, y: Int) -> IntPosition? {
+        if selectedCell != nil {
+            selectedCell?.removeFromParent()
+            selectedCell = nil
+        }
+        selectedCell = SKShapeNode(rectOf: CGSize(width: cellSize!, height: cellSize!), cornerRadius: cellSize!/8)
+        selectedCell?.strokeColor = .orange
+        selectedCell?.lineWidth = 5
+        selectedCell?.position.x = CGFloat(x)*cellSize!+cellSize!/2
+        selectedCell?.position.y = -CGFloat(y)*cellSize!-cellSize!/2
+        selectedCell?.zPosition = 20
+        if let n = board?.atPosition(x,y) {
+            if n.permanent {
+                selectedCell?.strokeColor = .gray
+            }
+        }
+        addChild(selectedCell!)
+        return IntPosition(x,y)
+    }
     
+    func clearSolverCells() {
+        for shape in solverCells {
+            shape.removeFromParent()
+        }
+        solverCells.removeAll()
+    }
+    func addSolverCellValue(x: Int, y: Int) {
+        let solverCell = SKShapeNode(rectOf: CGSize(width: cellSize!, height: cellSize!), cornerRadius: cellSize!/8)
+        solverCell.strokeColor = .green
+        solverCell.lineWidth = 5
+        solverCell.position.x = CGFloat(x)*cellSize!+cellSize!/2
+        solverCell.position.y = -CGFloat(y)*cellSize!-cellSize!/2
+        solverCell.zPosition = 30
+        solverCells.append(solverCell)
+        addChild(solverCell)
+    }
+    
+    func addSolverCellCandidate(x: Int, y: Int) {
+        let solverCell = SKShapeNode(rectOf: CGSize(width: cellSize!, height: cellSize!), cornerRadius: cellSize!/8)
+        solverCell.strokeColor = .green
+        solverCell.lineWidth = 3
+        solverCell.position.x = CGFloat(x)*cellSize!+cellSize!/2+1
+        solverCell.position.y = -CGFloat(y)*cellSize!-cellSize!/2-1
+        solverCell.zPosition = 30
+        solverCells.append(solverCell)
+        addChild(solverCell)
+    }
+
     func viewForNumber(number: Number) -> NumberView? {
         var result: NumberView?
         enumerateChildNodes(withName: "number") {

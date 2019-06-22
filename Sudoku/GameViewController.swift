@@ -57,7 +57,7 @@ class GameViewController: UIViewController, GameDelegate {
                 //board = Board(name: "Player", boardNumbers: "86793421554312679819258734692641385778465912331527896423174568965839147247986253_")
                 let repository = SudokuRepository()
                 //var boardNumbers = repository.getBoard(difficulty: .VeryHard, level: 1)
-                var boardNumbers = "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7"
+                //var boardNumbers = "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7"
                 //var boardNumbers = "86793421554312679819258734692641385778465912331527896423174568965839147247986253_"
                 // naked pairs
                 //var boardNumbers = "597_4__3_348____6_612_9__8475____49_8_9____7_4__6___5_17__2_64_96__83_2_28_____1_"
@@ -77,15 +77,15 @@ class GameViewController: UIViewController, GameDelegate {
                 // XWing
                 //var boardNumbers = "857912__629134675834678519212456_9_376_____259_5_2_6_14126__5_767_25__1_5___7_26_"
                 // YWing
-                //var boardNumbers = "9__24_____5_69_231_2__5__9__9_7__32___29356_7_7___29___69_2__7351__79_622_7_86__9"
-                let solver = Solver(boardString: boardNumbers)
+                var boardNumbers = "9__24_____5_69_231_2__5__9__9_7__32___29356_7_7___29___69_2__7351__79_622_7_86__9"
+                let solver = BruteForceSolverBoard(boardString: boardNumbers)
                 solver.printBoard()
                 if solver.solve() {
                     print("Solved board")
                     solver.initializeBoard(boardString: solver.solutions[0])
                     solver.printBoard()
                 }
-                let calculator = DifficultyCalculator(boardString: boardNumbers)
+                let calculator = TechniqueSolverBoard(boardString: boardNumbers)
                 
                 if calculator.solve(techniques: [SingleCandidate(),
                                                  SinglePosition(),
@@ -106,7 +106,9 @@ class GameViewController: UIViewController, GameDelegate {
                     print("Not solved")
                     calculator.printBoard()
                 }
+                /*
                 boardNumbers = calculator.asString()
+ */
                 /*
                 for _ in 0..<50 {
                     let solver = Solver()
@@ -127,15 +129,17 @@ class GameViewController: UIViewController, GameDelegate {
                     }
                 }
                 */
-                
-                board = Board(name: "Player", boardNumbers: boardNumbers)
-                scene.setup(delegate: self, board: board!)
-                solver.initializeBoard(boardString: boardNumbers)
-                for y in 0..<9 {
-                    for x in 0..<9 {
-                        let candidates = solver.getCandidates(x, y)
-                        for c in candidates {
-                            board?.switchCandidateNumber(number: c, x: x, y: y)
+                //var boardNumbers = repository.getGeneratedBoard(difficulty: .Hard)
+                if boardNumbers != nil {
+                    board = Board(name: "Player", boardNumbers: boardNumbers)
+                    scene.setup(delegate: self, board: board!)
+                    let solver = AbstractSolverBoard(boardString: boardNumbers)
+                    for y in 0..<9 {
+                        for x in 0..<9 {
+                            let candidates = solver.candidatesAt(x, y)
+                            for c in candidates {
+                                board?.switchCandidateNumber(number: c, x: x, y: y)
+                            }
                         }
                     }
                 }

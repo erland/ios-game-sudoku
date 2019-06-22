@@ -38,6 +38,25 @@ class Number : Hashable, NSCopying {
             notifyObservers()
         }
     }
+    func setCandidate(number: Int) {
+        if number>0 && number<=9 {
+            candidates[number-1] = true
+            notifyObservers()
+        }
+    }
+    func clearCandidate(number: Int) {
+        if number>0 && number<=9 {
+            candidates[number-1] = false
+            notifyObservers()
+        }
+    }
+    func clearCandidates() {
+        for number in 1...9 {
+            candidates[number-1] = false
+        }
+        notifyObservers()
+    }
+
     func getCandidates() -> [Int] {
         var result : [Int] = []
         for i in 0..<9 {

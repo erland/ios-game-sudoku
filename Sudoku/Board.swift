@@ -132,6 +132,57 @@ class Board {
             }
         }
     }
+    
+    func setCandidateNumber(number: Int, x: Int, y: Int) {
+        if !isInsideBoard(x, y) {
+            return
+        }
+        if board[x,y] != nil && (board[x,y]!.final || board[x,y]!.permanent) {
+            // Already occupied
+            if debug {
+                print("Already occupied")
+            }
+            return
+        }
+        var addedNumber : Bool = false
+        var n = board[x,y]
+        if n == nil {
+            addedNumber = true
+            n = Number(x, y)
+        }
+        n?.setCandidate(number: number)
+        
+        if addedNumber {
+            board[x,y] = n
+            numbers.insert(n!)
+            for observer in observers {
+                observer.numberAdded(number: n!)
+            }
+        }
+    }
+
+    func clearCandidates(x: Int, y: Int) {
+        if !isInsideBoard(x, y) {
+            return
+        }
+        if board[x,y] != nil && (board[x,y]!.final || board[x,y]!.permanent) {
+            // Already occupied
+            if debug {
+                print("Already occupied")
+            }
+            return
+        }
+        
+        if board[x,y] == nil {
+            // Already cleared
+            return
+        }
+        for n in 1...9 {
+            board[x,y]?.clearCandidate(number: n)
+        }
+    }
+
+    
     func addFinalNumber(number: Int, x: Int, y: Int, permanent: Bool = false) {
         if !isInsideBoard(x, y) {
             return
@@ -222,6 +273,25 @@ class Board {
     
     
 
+
+    func asString() -> String {
+        var result = ""
+        for y in 0..<height {
+            for x in 0..<width {
+                if board[x,y] != nil {
+                    let n = board[x,y]
+                    if n!.permanent || n!.final {
+                        result = result + "\(n!.number!)"
+                    }else {
+                        result = result + "_"
+                    }
+                }else {
+                    result = result + "_"
+                }
+            }
+        }
+        return result
+    }
     
     func debugBoard(debug: Bool? = nil) {
         if self.debug || (debug != nil && debug!) {

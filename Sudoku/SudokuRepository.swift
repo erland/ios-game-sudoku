@@ -58,4 +58,56 @@ class SudokuRepository {
             return veryHard[levelNo]
         }
     }
+    
+    func getGeneratedBoard(difficulty: Difficulty) -> String? {
+        let generator = BoardGenerator()
+        switch difficulty {
+        case .Easy:
+            return generator.generateWithLimits(maxTechniques: [SingleCandidate(),
+                                                             SinglePosition()],
+                                                maxNumbers: 28, timeoutSeconds: 30)
+        case .Medium:
+            return generator.generateWithLimits(tooEasyTechniques: [SingleCandidate(),
+                                                                      SinglePosition()],
+                                                maxTechniques: [SingleCandidate(),
+                                                             SinglePosition(),
+                                                             CandidateLines(),
+                                                             MultipleLines()],
+                                                maxNumbers: 28, timeoutSeconds: 120)
+        case .Hard:
+            return generator.generateWithLimits(tooEasyTechniques: [SingleCandidate(),
+                                                                    SinglePosition(),
+                                                                    CandidateLines(),
+                                                                    MultipleLines()],
+                                                maxTechniques: [SingleCandidate(),
+                                                             SinglePosition(),
+                                                             CandidateLines(),
+                                                             MultipleLines(),
+                                                             NakedPairs(),
+                                                             NakedTriples(),
+                                                             HiddenPairs(),
+                                                             HiddenTriples()],
+                                                maxNumbers: 25, timeoutSeconds: 120)
+        case .VeryHard:
+            return generator.generateWithLimits(tooEasyTechniques: [SingleCandidate(),
+                                                                    SinglePosition(),
+                                                                    CandidateLines(),
+                                                                    MultipleLines(),
+                                                                    NakedPairs(),
+                                                                    NakedTriples(),
+                                                                    HiddenPairs(),
+                                                                    HiddenTriples()],
+                                                maxTechniques: [SingleCandidate(),
+                                                             SinglePosition(),
+                                                             CandidateLines(),
+                                                             MultipleLines(),
+                                                             NakedPairs(),
+                                                             NakedTriples(),
+                                                             HiddenPairs(),
+                                                             HiddenTriples(),
+                                                             XWing(),
+                                                             YWing()],
+                                                maxNumbers: 25, timeoutSeconds: 120)
+        }
+    }
 }
