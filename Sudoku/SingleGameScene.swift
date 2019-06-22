@@ -17,9 +17,10 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var candidatePad : NumberPad?
     var permanentPad : NumberPad?
     var selectedPos : IntPosition?
-    var showCandidatesButton : SKLabelNode?
-    var resetCandidates = false
+    var detectCandidatesButton : SKLabelNode?
+    var removeCandidatesButton : SKLabelNode?
     var showHintButton : SKLabelNode?
+    var quitButton : SKLabelNode?
     var hintName : SKLabelNode?
 
     func setup(delegate: GameDelegate, board: Board) {
@@ -27,8 +28,10 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         
         self.boardView = childNode(withName: "board") as? BoardView
         self.eraseButton = childNode(withName: "erase") as? SKLabelNode
+        self.quitButton = childNode(withName: "quit") as? SKLabelNode
         self.clearButton = childNode(withName: "clear") as? SKLabelNode
-        self.showCandidatesButton = childNode(withName: "showCandidates") as? SKLabelNode
+        self.detectCandidatesButton = childNode(withName: "detectCandidates") as? SKLabelNode
+        self.removeCandidatesButton = childNode(withName: "removeCandidates") as? SKLabelNode
         self.showHintButton = childNode(withName: "showHint") as? SKLabelNode
         self.hintName = childNode(withName: "hintName") as? SKLabelNode
         self.hintName?.isHidden = true
@@ -82,6 +85,8 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
             if let selectedPos = selectedPos {
                 boardView!.board!.removeNumber(x: selectedPos.x, y: selectedPos.y)
             }
+        }else if quitButton!.contains(position) {
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name)
         }else if clearButton!.contains(position) {
             for y in 0..<9 {
                 for x in 0..<9 {
@@ -91,37 +96,33 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                     }
                 }
             }
-            resetCandidates = false
-            showCandidatesButton?.text = "Generate"
-        }else if showCandidatesButton!.contains(position) {
-            showCandidates()
+        }else if detectCandidatesButton!.contains(position) {
+            detectCandidates()
+        }else if removeCandidatesButton!.contains(position) {
+            removeCandidates()
         }else if showHintButton!.contains(position) {
             showHint()
         }
         checkAndProcessGameEnding()
     }
-    func showCandidates() {
-        if resetCandidates {
-            resetCandidates = false
-            showCandidatesButton?.text = "Generate"
-            for y in 0..<9 {
-                for x in 0..<9 {
-                    boardView!.board!.clearCandidates(x: x, y: y)
+    func detectCandidates() {
+        let boardString = boardView!.board!.asString()
+        let solver = AbstractSolverBoard(boardString: boardString, debug: false)
+        solver.resetCandidates()
+        for y in 0..<9 {
+            for x in 0..<9 {
+                boardView!.board!.clearCandidates(x: x, y: y)
+                for n in solver.candidatesAt(x, y) {
+                    boardView!.board!.setCandidateNumber(number: n, x: x, y: y)
                 }
             }
-        }else {
-            showCandidatesButton?.text = "Remove"
-            resetCandidates = true
-            let boardString = boardView!.board!.asString()
-            let solver = AbstractSolverBoard(boardString: boardString, debug: false)
-            solver.resetCandidates()
-            for y in 0..<9 {
-                for x in 0..<9 {
-                    boardView!.board!.clearCandidates(x: x, y: y)
-                    for n in solver.candidatesAt(x, y) {
-                        boardView!.board!.setCandidateNumber(number: n, x: x, y: y)
-                    }
-                }
+        }
+    }
+
+    func removeCandidates() {
+        for y in 0..<9 {
+            for x in 0..<9 {
+                boardView!.board!.clearCandidates(x: x, y: y)
             }
         }
     }
