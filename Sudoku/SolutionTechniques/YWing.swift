@@ -71,7 +71,6 @@ class YWing : SolverTechnique {
             for otherPos in otherPositions {
                 let otherX = otherPos%9
                 let otherY = Int(otherPos/9)
-                print("Found possible YWing for \(firstNum) at \(x),\(y) and \(otherX),\(otherY)")
                 let otherCandidates = board.candidatesAt(otherX, otherY)
                 var otherNum = otherCandidates[0]
                 if otherNum == num {
@@ -81,7 +80,6 @@ class YWing : SolverTechnique {
                 for thirdPos in thirdPositions {
                     let thirdX = thirdPos%9
                     let thirdY = Int(thirdPos/9)
-                    print("Evaluating YWing for \(firstNum) at \(x),\(y) and \(otherX),\(otherY) and \(thirdX),\(thirdY)")
                     if (thirdX != x || thirdX != otherX) && (thirdY != y || thirdY != otherY) {
                         print("YWing for \(firstNum) at \(x),\(y) and \(otherX),\(otherY) and \(thirdX),\(thirdY)")
                         var removed = false
