@@ -76,57 +76,59 @@ class YWing : SolverTechnique {
                 if otherNum == num {
                     otherNum = otherCandidates[1]
                 }
-                let thirdPositions = findOtherPairsWithNumbers(board: board, pair: [firstNum,otherNum], x: otherX, y: otherY)
-                for thirdPos in thirdPositions {
-                    let thirdX = thirdPos%9
-                    let thirdY = Int(thirdPos/9)
-                    if (thirdX != x || thirdX != otherX) && (thirdY != y || thirdY != otherY) {
-                        print("YWing for \(firstNum) at \(x),\(y) and \(otherX),\(otherY) and \(thirdX),\(thirdY)")
-                        var removed = false
-                        if board.candidatesAt(thirdX, y).contains(firstNum) {
-                            print("Removing \(firstNum) from \(thirdX),\(y)")
-                            board.removeCandidate(x: thirdX, y: y, value: firstNum)
-                            removed = true
-                        }
-                        if board.candidatesAt(x, thirdY).contains(firstNum) {
-                            print("Removing \(firstNum) from \(x),\(thirdY)")
-                            board.removeCandidate(x: x, y: thirdY, value: firstNum)
-                            removed = true
-                        }
-                        for removeRow in 0..<9 {
-                            if board.squareOf(x, removeRow) == board.squareOf(thirdX, thirdY) {
-                                if board.candidatesAt(x, removeRow).contains(firstNum) {
-                                    print("Removing \(firstNum) from \(x),\(removeRow)")
-                                    board.removeCandidate(x: x, y: removeRow, value: firstNum)
-                                    removed = true
+                if otherNum != firstNum {
+                    let thirdPositions = findOtherPairsWithNumbers(board: board, pair: [firstNum,otherNum], x: otherX, y: otherY)
+                    for thirdPos in thirdPositions {
+                        let thirdX = thirdPos%9
+                        let thirdY = Int(thirdPos/9)
+                        if (thirdX != x || thirdX != otherX) && (thirdY != y || thirdY != otherY) {
+                            print("YWing for \(firstNum) at \(x),\(y) \(board.candidatesAt(x,y)) and \(otherX),\(otherY) \(board.candidatesAt(otherX,otherY)) and \(thirdX),\(thirdY) \(board.candidatesAt(thirdX, thirdY))")
+                            var removed = false
+                            if board.candidatesAt(thirdX, y).contains(firstNum) {
+                                print("Removing \(firstNum) from \(thirdX),\(y)")
+                                board.removeCandidate(x: thirdX, y: y, value: firstNum)
+                                removed = true
+                            }
+                            if board.candidatesAt(x, thirdY).contains(firstNum) {
+                                print("Removing \(firstNum) from \(x),\(thirdY)")
+                                board.removeCandidate(x: x, y: thirdY, value: firstNum)
+                                removed = true
+                            }
+                            for removeRow in 0..<9 {
+                                if board.squareOf(x, removeRow) == board.squareOf(thirdX, thirdY) {
+                                    if board.candidatesAt(x, removeRow).contains(firstNum) {
+                                        print("Removing \(firstNum) from \(x),\(removeRow)")
+                                        board.removeCandidate(x: x, y: removeRow, value: firstNum)
+                                        removed = true
+                                    }
+                                }
+                                if board.squareOf(thirdX, removeRow) == board.squareOf(x, y) {
+                                    if board.candidatesAt(thirdX, removeRow).contains(firstNum) {
+                                        print("Removing \(firstNum) from \(thirdX),\(removeRow)")
+                                        board.removeCandidate(x: thirdX, y: removeRow, value: firstNum)
+                                        removed = true
+                                    }
                                 }
                             }
-                            if board.squareOf(thirdX, removeRow) == board.squareOf(x, y) {
-                                if board.candidatesAt(thirdX, removeRow).contains(firstNum) {
-                                    print("Removing \(firstNum) from \(thirdX),\(removeRow)")
-                                    board.removeCandidate(x: thirdX, y: removeRow, value: firstNum)
-                                    removed = true
+                            for removeCol in 0..<9 {
+                                if board.squareOf(removeCol, y) == board.squareOf(thirdX, thirdY) {
+                                    if board.candidatesAt(removeCol, y).contains(firstNum) {
+                                        print("Removing \(firstNum) from \(removeCol),\(y)")
+                                        board.removeCandidate(x: removeCol, y: y, value: firstNum)
+                                        removed = true
+                                    }
+                                }
+                                if board.squareOf(removeCol, thirdY) == board.squareOf(x, y) {
+                                    if board.candidatesAt(removeCol, thirdY).contains(firstNum) {
+                                        print("Removing \(firstNum) from \(removeCol),\(thirdY)")
+                                        board.removeCandidate(x: removeCol, y: thirdY, value: firstNum)
+                                        removed = true
+                                    }
                                 }
                             }
-                        }
-                        for removeCol in 0..<9 {
-                            if board.squareOf(removeCol, y) == board.squareOf(thirdX, thirdY) {
-                                if board.candidatesAt(removeCol, y).contains(firstNum) {
-                                    print("Removing \(firstNum) from \(removeCol),\(y)")
-                                    board.removeCandidate(x: removeCol, y: y, value: firstNum)
-                                    removed = true
-                                }
+                            if removed {
+                                return true
                             }
-                            if board.squareOf(removeCol, thirdY) == board.squareOf(x, y) {
-                                if board.candidatesAt(removeCol, thirdY).contains(firstNum) {
-                                    print("Removing \(firstNum) from \(removeCol),\(thirdY)")
-                                    board.removeCandidate(x: removeCol, y: thirdY, value: firstNum)
-                                    removed = true
-                                }
-                            }
-                        }
-                        if removed {
-                            return true
                         }
                     }
                 }
