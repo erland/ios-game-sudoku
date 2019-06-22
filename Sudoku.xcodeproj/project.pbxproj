@@ -43,6 +43,7 @@
 		DC9DB5F822BCB65E00D54384 /* XWing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F722BCB65E00D54384 /* XWing.swift */; };
 		DC9DB5FA22BCB67700D54384 /* SolverTechnique.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5F922BCB67700D54384 /* SolverTechnique.swift */; };
 		DC9DB5FC22BCB69300D54384 /* BoardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5FB22BCB69300D54384 /* BoardHandler.swift */; };
+		DC9DB5FE22BDF99B00D54384 /* YWing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5FD22BDF99B00D54384 /* YWing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		DC9DB5F722BCB65E00D54384 /* XWing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWing.swift; sourceTree = "<group>"; };
 		DC9DB5F922BCB67700D54384 /* SolverTechnique.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolverTechnique.swift; sourceTree = "<group>"; };
 		DC9DB5FB22BCB69300D54384 /* BoardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardHandler.swift; sourceTree = "<group>"; };
+		DC9DB5FD22BDF99B00D54384 /* YWing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YWing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				DC9DB5F722BCB65E00D54384 /* XWing.swift */,
 				DC9DB5F922BCB67700D54384 /* SolverTechnique.swift */,
 				DC9DB5FB22BCB69300D54384 /* BoardHandler.swift */,
+				DC9DB5FD22BDF99B00D54384 /* YWing.swift */,
 			);
 			path = SolutionTechniques;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				DC9DB5E622BCB52000D54384 /* SinglePosition.swift in Sources */,
 				DC047F9B22B395C400A298AC /* MatchMakingScene.swift in Sources */,
 				DC047FAE22B41C0F00A298AC /* SingleGameOverScene.swift in Sources */,
+				DC9DB5FE22BDF99B00D54384 /* YWing.swift in Sources */,
 				DC9DB5F822BCB65E00D54384 /* XWing.swift in Sources */,
 				DC047FA022B395C400A298AC /* Board.swift in Sources */,
 				DC9DB5F622BCB64000D54384 /* HiddenQuads.swift in Sources */,

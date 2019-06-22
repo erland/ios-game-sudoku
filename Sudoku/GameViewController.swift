@@ -74,7 +74,10 @@ class GameViewController: UIViewController, GameDelegate {
                 // hidden quad
                 //var boardNumbers = "816573294392______4572_9__6941___5687854961236238___4_279_____1138____7_564____82"
                 //var boardNumbers = "_3_____1___8_9____4__6_8______57694____98352____124___276__519____7_9____95___47_"
-                var boardNumbers = "857912__629134675834678519212456_9_376_____259_5_2_6_14126__5_767_25__1_5___7_26_"
+                // XWing
+                //var boardNumbers = "857912__629134675834678519212456_9_376_____259_5_2_6_14126__5_767_25__1_5___7_26_"
+                // YWing
+                var boardNumbers = "9__24_____5_69_231_2__5__9__9_7__32___29356_7_7___29___69_2__7351__79_622_7_86__9"
                 let solver = Solver(boardString: boardNumbers)
                 solver.printBoard()
                 if solver.solve() {
@@ -83,6 +86,7 @@ class GameViewController: UIViewController, GameDelegate {
                     solver.printBoard()
                 }
                 let calculator = DifficultyCalculator(boardString: boardNumbers)
+                /*
                 if calculator.solve(techniques: [SingleCandidate(),
                                                  SinglePosition(),
                                                  CandidateLines(),
@@ -94,6 +98,8 @@ class GameViewController: UIViewController, GameDelegate {
                                                  HiddenTriples(),
                                                  HiddenQuads(),
                                                  XWing()]) {
+ */
+                if calculator.solve(techniques: [SingleCandidate()]) {
                     print("Solved")
                     calculator.printBoard()
                 }else {
