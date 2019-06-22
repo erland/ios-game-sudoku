@@ -37,7 +37,7 @@ class Solver {
                 let i = 9*y+x
                 if boardString.count > i {
                     let ch = boardString[boardString.index(boardString.startIndex, offsetBy: i)]
-                    if ch != "_" {
+                    if ch != "_" && ch != "0" {
                         if let num = Int(String(ch)) {
                             setValue(x: x,y: y, value: num, present: true)
                         }
