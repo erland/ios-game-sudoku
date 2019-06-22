@@ -16,6 +16,7 @@ class NumberView : SKSpriteNode, NumberObserver {
         self.cellSize = cellSize
         self.number = number
         super.init(texture: nil, color: UIColor.clear, size: CGSize(width: cellSize, height: cellSize))
+        setScale(cellSize/66.67)
         number.attachObserver(observer: self)
         anchorPoint = CGPoint(x: 0, y: 1)
         numberUpdated(number: number)

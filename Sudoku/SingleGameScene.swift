@@ -86,7 +86,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                 boardView!.board!.removeNumber(x: selectedPos.x, y: selectedPos.y)
             }
         }else if quitButton!.contains(position) {
-            gameDelegate?.gameComplete(playerName: boardView!.board!.name)
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!)
         }else if clearButton!.contains(position) {
             for y in 0..<9 {
                 for x in 0..<9 {
@@ -210,7 +210,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
 
     func checkAndProcessGameEnding() {
         if boardView!.board!.isAllNumbersPlaced() {
-            gameDelegate?.gameComplete(playerName: boardView!.board!.name)
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!)
         }
         
     }

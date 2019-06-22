@@ -40,25 +40,50 @@ class SudokuRepository {
         "_52_46_3__1__9____7____3_____1__5_289_5___6_162_9__5_____6____4____3__1__9_41_35_"
     ]
     
-    func getBoard(difficulty: Difficulty, level: Int) -> String {
+    func getBoard(difficulty: Difficulty, level: Int) -> String? {
         var levelNo = level
-        if level < 1 && level > 4 {
-            levelNo = Int.random(in: 1 ... 4)
+        if level < 1 || level > 4 {
+            return nil
         }
         levelNo = level - 1
 
         switch difficulty {
         case .Easy:
-            return easy[levelNo]
+            if levelNo<easy.count {
+                return easy[levelNo]
+            }
         case .Medium:
-            return medium[levelNo]
+            if levelNo<medium.count {
+                return medium[levelNo]
+            }
         case .Hard:
-            return hard[levelNo]
+            if levelNo<hard.count {
+                return hard[levelNo]
+            }
         case .VeryHard:
-            return veryHard[levelNo]
+            if levelNo<veryHard.count {
+                return veryHard[levelNo]
+            }
         }
+        return nil
     }
     
+    func getGeneratedBoard() -> String? {
+        let generator = BoardGenerator()
+        return generator.generateWithLimits(maxTechniques: [SingleCandidate(),
+                                                            SinglePosition(),
+                                                            CandidateLines(),
+                                                            MultipleLines(),
+                                                            NakedPairs(),
+                                                            NakedTriples(),
+                                                            HiddenPairs(),
+                                                            HiddenTriples(),
+                                                            XWing(),
+                                                            YWing()],
+                                            maxNumbers: 28, timeoutSeconds: 60)
+    }
+    
+
     func getGeneratedBoard(difficulty: Difficulty) -> String? {
         let generator = BoardGenerator()
         switch difficulty {
@@ -110,4 +135,31 @@ class SudokuRepository {
                                                 maxNumbers: 25, timeoutSeconds: 120)
         }
     }
+    
+    //board = Board(name: "Player", boardNumbers: "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7")
+    //board = Board(name: "Player", boardNumbers: "86793421554312679819258734692641385778465912331527896423174568965839147247986253_")
+    //let repository = SudokuRepository()
+    //var boardNumbers = repository.getBoard(difficulty: .VeryHard, level: 1)
+    //var boardNumbers = "2____1_49__8____61___7_6528654__9_1__924__6___31___4_2_2_387_5_347195286_8_6_41_7"
+    //var boardNumbers = "86793421554312679819258734692641385778465912331527896423174568965839147247986253_"
+    // naked pairs
+    //var boardNumbers = "597_4__3_348____6_612_9__8475____49_8_9____7_4__6___5_17__2_64_96__83_2_28_____1_"
+    // naked triples
+    //var boardNumbers = "__3_____1_9__35268__________7____18613_86_725286___943_41_8_3___5_2_6_1______3_7_"
+    // naked quad
+    //var boardNumbers = "_9________28___9_6___7_9__2____26__43___1_________7__3_1_____59__4_8__31_82__1__7"
+    // hidden pair
+    //var boardNumbers = "_________9_46_7____768_41__3_97_1_8_7_8___3_1_513_87_2__75_261___54_32_8_________"
+    //var boardNumbers = "72_4_8_3__8_____474_1_768_281_739______851______264_8_2_968_41334______8168943275"
+    // hidden triples
+    //var boardNumbers = "28____473534827196_71_34_8_3__5___4____34__6_46_79_31__9_2_3654__3__9821____8_937"
+    //var boardNumbers = "5__62__37__489________5____93________2____6_57_______3_____9_________7__68_57___2"
+    // hidden quad
+    //var boardNumbers = "816573294392______4572_9__6941___5687854961236238___4_279_____1138____7_564____82"
+    //var boardNumbers = "_3_____1___8_9____4__6_8______57694____98352____124___276__519____7_9____95___47_"
+    // XWing
+    //var boardNumbers = "857912__629134675834678519212456_9_376_____259_5_2_6_14126__5_767_25__1_5___7_26_"
+    // YWing
+    //var boardNumbers = "9__24_____5_69_231_2__5__9__9_7__32___29356_7_7___29___69_2__7351__79_622_7_86__9"
+
 }
