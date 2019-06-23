@@ -23,6 +23,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var quitButton : SKLabelNode?
     var hintName : SKLabelNode?
     var timeText : SKLabelNode?
+    var boardName : SKLabelNode?
     var timeCounter : Int = 0
 
     func setup(delegate: GameDelegate, board: Board) {
@@ -32,6 +33,8 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         self.eraseButton = childNode(withName: "erase") as? SKLabelNode
         self.quitButton = childNode(withName: "quit") as? SKLabelNode
         self.clearButton = childNode(withName: "clear") as? SKLabelNode
+        self.boardName = childNode(withName: "boardName") as? SKLabelNode
+        self.boardName?.text = board.name
         self.detectCandidatesButton = childNode(withName: "detectCandidates") as? SKLabelNode
         self.removeCandidatesButton = childNode(withName: "removeCandidates") as? SKLabelNode
         self.showHintButton = childNode(withName: "showHint") as? SKLabelNode

@@ -86,7 +86,21 @@ class SudokuRepository {
                                                                                                   HiddenPairs(),
                                                                                                   HiddenTriples()]) {
             return Difficulty.Hard
+        }else if TechniqueSolverBoard(boardString: boardNumbers, debug: false).solve(techniques: [SingleCandidate(),
+                                                                                                  SinglePosition(),
+                                                                                                  CandidateLines(),
+                                                                                                  MultipleLines(),
+                                                                                                  NakedPairs(),
+                                                                                                  NakedTriples(),
+                                                                                                  NakedQuads(),
+                                                                                                  HiddenPairs(),
+                                                                                                  HiddenTriples(),
+                                                                                                  HiddenQuads(),
+                                                                                                  XWing(),
+                                                                                                  YWing()]) {
+            return Difficulty.VeryHard
         }else {
+            print("Unable to solve board with implemented techniques")
             return Difficulty.VeryHard
         }
     }

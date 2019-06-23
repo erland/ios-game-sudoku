@@ -15,12 +15,15 @@ class SingleGameOverScene: SKScene {
     var openedTime: TimeInterval?
     var status: SKLabelNode?
     var completedIn: SKLabelNode?
+    var boardName: SKLabelNode?
     
     func setup(delegate: GameDelegate, board: Board, seconds: Int) {
         self.gameDelegate = delegate
         
         self.boardView = childNode(withName:"board") as? BoardView
         self.status = childNode(withName:"status") as? SKLabelNode
+        self.boardName = childNode(withName:"boardName") as? SKLabelNode
+        self.boardName?.text = board.name
         self.completedIn = childNode(withName:"completedIn") as? SKLabelNode
         self.boardView?.setup(board: board)
         if boardView!.board!.isAllNumbersPlaced() {

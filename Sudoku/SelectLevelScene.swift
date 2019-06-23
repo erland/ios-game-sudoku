@@ -39,7 +39,7 @@ class SelectLevelScene: SKScene {
                     let boardNumbers = repository.getBoard(difficulty: difficulty, level: i)
                     if boardNumbers != nil {
                         DispatchQueue.main.async {
-                            let board = Board.init(name: "Player", boardNumbers: boardNumbers!)
+                            let board = Board.init(name: "\(self.difficultyAsString(difficulty)) \(i)", boardNumbers: boardNumbers!)
                             self.boards[i-1].setup(board: board)
                             self.boards[i-1].alpha = 0.3
                             self.boards[i-1].isHidden = false
@@ -65,7 +65,7 @@ class SelectLevelScene: SKScene {
                     if boardNumbers != nil {
                         let difficulty = repository.calculateDifficulty(boardNumbers: boardNumbers!)
                         DispatchQueue.main.async {
-                            let board = Board.init(name: "Player", boardNumbers: boardNumbers!)
+                            let board = Board.init(name: "Random \(self.difficultyAsString(difficulty))", boardNumbers: boardNumbers!)
                             self.boards[i-1].setup(board: board)
                             self.boards[i-1].alpha = 0.3
                             self.boards[i-1].isHidden = false
