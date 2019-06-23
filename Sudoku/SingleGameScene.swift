@@ -26,7 +26,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var boardName : SKLabelNode?
     var timeCounter : Int = 0
 
-    func setup(delegate: GameDelegate, board: Board) {
+    func setup(delegate: GameDelegate, board: Board, startTime: Int) {
         self.gameDelegate = delegate
         
         self.boardView = childNode(withName: "board") as? BoardView
@@ -47,7 +47,8 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         print("Setup board view for \(board.name)")
         self.boardView?.setup(board: board)
         self.timeText = childNode(withName: "time") as? SKLabelNode
-        timeText?.text = "00:00"
+        timeCounter = startTime
+        displayTime()
 
         
         boardView?.board?.attachObserver(self)
@@ -58,13 +59,16 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     
     override func didMove(to view: SKView) {
         print("Moved to game scene")
-        timeCounter = 0
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         
     }
     
     @objc func updateTimer() {
         timeCounter = timeCounter + 1
+        displayTime()
+    }
+    
+    func displayTime() {
         let hours = Int(timeCounter/3600)
         let minutes = String(format: "%02d", Int((timeCounter%3600)/60))
         let seconds = String(format: "%02d", Int(timeCounter%60))
@@ -167,54 +171,68 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         solver.attachObserver(self)
         if solver.solve(technique: SingleCandidate()) {
             print("Showed solution with Single Candidate")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Single Candidate"
             hintName?.isHidden = false
         }else if solver.solve(technique: SinglePosition()) {
             print("Showed solution with Single Position")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Single Position"
             hintName?.isHidden = false
         }else if solver.solve(technique: CandidateLines()) {
             print("Showed solution with Candidate Lines")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Candidate Line"
             hintName?.isHidden = false
         }else if solver.solve(technique: MultipleLines()) {
             print("Showed solution with Multiple Lines")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Multiple Lines"
             hintName?.isHidden = false
         }else if solver.solve(technique: NakedPairs()) {
             print("Showed solution with Naked Pair")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Naked Pair"
             hintName?.isHidden = false
         }else if solver.solve(technique: NakedTriples()) {
             print("Showed solution with Naked Triples")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Naked Triples"
             hintName?.isHidden = false
         }else if solver.solve(technique: NakedQuads()) {
             print("Showed solution with Naked Quads")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Naked Quads"
             hintName?.isHidden = false
         }else if solver.solve(technique: HiddenPairs()) {
             print("Showed solution with Hidden Pair")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Hidden Pair"
             hintName?.isHidden = false
         }else if solver.solve(technique: HiddenTriples()) {
             print("Showed solution with Hidden Triples")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Hidden Triples"
             hintName?.isHidden = false
         }else if solver.solve(technique: HiddenQuads()) {
             print("Showed solution with Hidden Quads")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Hidden Quads"
             hintName?.isHidden = false
         }else if solver.solve(technique: XWing()) {
             print("Showed solution with XWing")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "X-Wing"
             hintName?.isHidden = false
         }else if solver.solve(technique: YWing()) {
             print("Showed solution with YWing")
+            hintName?.fontColor = UIColor.green
             hintName?.text = "Y-Wing"
             hintName?.isHidden = false
         }else {
-            self.hintName?.isHidden = true
+            hintName?.fontColor = UIColor.orange
+            hintName?.text = "No hint available"
+            hintName?.isHidden = false
         }
     }
     

@@ -15,6 +15,8 @@ class SelectDifficultyScene: SKScene {
     var hardButton: SKLabelNode?
     var veryHardButton: SKLabelNode?
     var randomButton: SKLabelNode?
+    var completedButton: SKLabelNode?
+    var inProgressButton: SKLabelNode?
 
     func setup(delegate: GameDelegate) {
         self.gameDelegate = delegate
@@ -24,6 +26,8 @@ class SelectDifficultyScene: SKScene {
         self.hardButton = childNode(withName:"hard") as? SKLabelNode
         self.veryHardButton = childNode(withName:"veryHard") as? SKLabelNode
         self.randomButton = childNode(withName:"random") as? SKLabelNode
+        self.completedButton = childNode(withName:"completed") as? SKLabelNode
+        self.inProgressButton = childNode(withName:"inProgress") as? SKLabelNode
     }
     
     override func didMove(to view: SKView) {
@@ -45,6 +49,10 @@ class SelectDifficultyScene: SKScene {
             gameDelegate?.selectedDifficulty(difficulty: SudokuRepository.Difficulty.VeryHard)
         }else if randomButton!.contains(touchLocation) {
             gameDelegate?.selectedDifficulty(difficulty: nil)
+        }else if completedButton!.contains(touchLocation) {
+            gameDelegate?.selectedCompletedBoards()
+        }else if inProgressButton!.contains(touchLocation) {
+            gameDelegate?.selectedInProgressBoards()
         }
     }
 }

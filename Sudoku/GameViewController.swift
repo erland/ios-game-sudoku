@@ -22,6 +22,11 @@ class GameViewController: UIViewController, GameDelegate {
     }
     
     func gameComplete(playerName: String, board: Board, seconds: Int) {
+        if board.isAllNumbersPlaced() {
+            BoardStorage().storeCompletedBoard(board: board, seconds: seconds)
+        }else {
+            BoardStorage().storeBoardInProgress(board: board, seconds: seconds)
+        }
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "SingleGameOverScene") as? SingleGameOverScene {
@@ -35,8 +40,6 @@ class GameViewController: UIViewController, GameDelegate {
         }
     }
     
-
-    
     func selectedDifficulty(difficulty: SudokuRepository.Difficulty?) {
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -49,8 +52,33 @@ class GameViewController: UIViewController, GameDelegate {
         }
     }
     
-    func selectedBoard(board: Board) {
-        startSingleGame(board: board)
+    func selectedCompletedBoards() {
+        if let view = self.view as! SKView? {
+            // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "SelectLevelScene") as? SelectLevelScene {
+                scene.setup(delegate: self, difficulty: nil, completed: true)
+                // Set the scale mode to scale to fit the window
+                scene.scaleMode = .aspectFit
+                view.presentScene(scene)
+            }
+        }
+    }
+    
+    func selectedInProgressBoards() {
+        if let view = self.view as! SKView? {
+            // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "SelectLevelScene") as? SelectLevelScene {
+                scene.setup(delegate: self, difficulty: nil, inProgress: true)
+                // Set the scale mode to scale to fit the window
+                scene.scaleMode = .aspectFit
+                view.presentScene(scene)
+            }
+        }
+    }
+
+    
+    func selectedBoard(board: Board, startTime: Int) {
+        startSingleGame(board: board, startTime: startTime)
     }
     
     override func viewDidLoad() {
@@ -72,14 +100,14 @@ class GameViewController: UIViewController, GameDelegate {
         }
 
     }
-    func startSingleGame(board: Board) {
+    func startSingleGame(board: Board, startTime: Int) {
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "SingleGameScene") as? SingleGameScene {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
                 
-                scene.setup(delegate: self, board: board)
+                scene.setup(delegate: self, board: board, startTime: startTime)
 
                 view.presentScene(scene)
             }
