@@ -68,6 +68,29 @@ class SudokuRepository {
         return nil
     }
     
+    func calculateDifficulty(boardNumbers: String) -> Difficulty {
+        if TechniqueSolverBoard(boardString: boardNumbers, debug: false).solve(techniques: [SingleCandidate(),
+                                                                                            SinglePosition()]) {
+            return Difficulty.Easy
+        }else if TechniqueSolverBoard(boardString: boardNumbers, debug: false).solve(techniques: [SingleCandidate(),
+                                                                                                  SinglePosition(),
+                                                                                                  CandidateLines(),
+                                                                                                  MultipleLines()]) {
+            return Difficulty.Medium
+        }else if TechniqueSolverBoard(boardString: boardNumbers, debug: false).solve(techniques: [SingleCandidate(),
+                                                                                                  SinglePosition(),
+                                                                                                  CandidateLines(),
+                                                                                                  MultipleLines(),
+                                                                                                  NakedPairs(),
+                                                                                                  NakedTriples(),
+                                                                                                  HiddenPairs(),
+                                                                                                  HiddenTriples()]) {
+            return Difficulty.Hard
+        }else {
+            return Difficulty.VeryHard
+        }
+    }
+    
     func getGeneratedBoard() -> String? {
         let generator = BoardGenerator()
         return generator.generateWithLimits(maxTechniques: [SingleCandidate(),

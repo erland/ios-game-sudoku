@@ -12,6 +12,7 @@ class SelectLevelScene: SKScene {
     var gameDelegate: GameDelegate?
     
     var boards : [BoardView] = []
+    var boardTexts : [SKLabelNode] = []
     var loadingText : SKLabelNode?
     
     func setup(delegate: GameDelegate, difficulty: SudokuRepository.Difficulty?) {
@@ -25,6 +26,11 @@ class SelectLevelScene: SKScene {
                 boardView.isHidden = true
                 boards.append(boardView)
             }
+            let boardText = childNode(withName:"boardText\(i)") as? SKLabelNode
+            if let boardText = boardText {
+                boardText.isHidden = true
+                boardTexts.append(boardText)
+            }
         }
         DispatchQueue.global().asyncAfter(deadline: .now(), execute: {
             let repository = SudokuRepository()
@@ -37,6 +43,10 @@ class SelectLevelScene: SKScene {
                             self.boards[i-1].setup(board: board)
                             self.boards[i-1].alpha = 0.3
                             self.boards[i-1].isHidden = false
+                            self.boardTexts[i-1].text = "\(self.difficultyAsString(difficulty)) (\(self.numbersInBoard(boardNumbers!)))"
+                            self.boardTexts[i-1].alpha = 0.3
+                            self.boardTexts[i-1].isHidden = false
+                            
                         }
                     }
                 }
@@ -44,6 +54,7 @@ class SelectLevelScene: SKScene {
                     for i in 0..<12 {
                         if self.boards[i].alpha > 0.1 {
                             self.boards[i].alpha = 1.0
+                            self.boardTexts[i].alpha = 1.0
                         }
                     }
                     self.loadingText?.isHidden = true
@@ -52,11 +63,15 @@ class SelectLevelScene: SKScene {
                 for i in 1...12 {
                     let boardNumbers = repository.getGeneratedBoard()
                     if boardNumbers != nil {
+                        let difficulty = repository.calculateDifficulty(boardNumbers: boardNumbers!)
                         DispatchQueue.main.async {
                             let board = Board.init(name: "Player", boardNumbers: boardNumbers!)
                             self.boards[i-1].setup(board: board)
                             self.boards[i-1].alpha = 0.3
                             self.boards[i-1].isHidden = false
+                            self.boardTexts[i-1].text = "\(self.difficultyAsString(difficulty)) (\(self.numbersInBoard(boardNumbers!)))"
+                            self.boardTexts[i-1].alpha = 0.3
+                            self.boardTexts[i-1].isHidden = false
                         }
                     }
                 }
@@ -64,6 +79,7 @@ class SelectLevelScene: SKScene {
                     for i in 0..<12 {
                         if self.boards[i].alpha > 0.1 {
                             self.boards[i].alpha = 1.0
+                            self.boardTexts[i].alpha = 1.0
                         }
                     }
                     self.loadingText?.isHidden = true
@@ -71,6 +87,25 @@ class SelectLevelScene: SKScene {
             }
         })
         
+    }
+    
+    func numbersInBoard(_ boardNumbers: String) -> Int {
+        return 81 - boardNumbers.characters.filter { $0 == "_" }.count
+    }
+    
+    func difficultyAsString(_ difficulty: SudokuRepository.Difficulty) -> String {
+        switch difficulty {
+        case .Easy:
+            return "Easy"
+        case .Medium:
+            return "Medium"
+        case .Hard:
+            return "Hard"
+        case .VeryHard:
+            return "Very hard"
+        default:
+            return "\(difficulty)"
+        }
     }
     
     override func didMove(to view: SKView) {
