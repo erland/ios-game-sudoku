@@ -22,6 +22,8 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var showHintButton : SKLabelNode?
     var quitButton : SKLabelNode?
     var hintName : SKLabelNode?
+    var timeText : SKLabelNode?
+    var timeCounter : Int = 0
 
     func setup(delegate: GameDelegate, board: Board) {
         self.gameDelegate = delegate
@@ -41,7 +43,9 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         self.candidatePad?.setup(color: .darkGray)
         print("Setup board view for \(board.name)")
         self.boardView?.setup(board: board)
-        
+        self.timeText = childNode(withName: "time") as? SKLabelNode
+        timeText?.text = "00:00"
+
         
         boardView?.board?.attachObserver(self)
     }
@@ -51,9 +55,22 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     
     override func didMove(to view: SKView) {
         print("Moved to game scene")
+        timeCounter = 0
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         
     }
     
+    @objc func updateTimer() {
+        timeCounter = timeCounter + 1
+        let hours = Int(timeCounter/3600)
+        let minutes = String(format: "%02d", Int((timeCounter%3600)/60))
+        let seconds = String(format: "%02d", Int(timeCounter%60))
+        if hours == 0 {
+            timeText?.text = "\(minutes):\(seconds)"
+        }else {
+            timeText?.text = "\(hours):\(minutes):\(seconds)"
+        }
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -86,7 +103,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                 boardView!.board!.removeNumber(x: selectedPos.x, y: selectedPos.y)
             }
         }else if quitButton!.contains(position) {
-            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!)
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter)
         }else if clearButton!.contains(position) {
             for y in 0..<9 {
                 for x in 0..<9 {
@@ -210,7 +227,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
 
     func checkAndProcessGameEnding() {
         if boardView!.board!.isAllNumbersPlaced() {
-            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!)
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter)
         }
         
     }

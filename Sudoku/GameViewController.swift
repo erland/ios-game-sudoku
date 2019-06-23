@@ -21,14 +21,14 @@ class GameViewController: UIViewController, GameDelegate {
         //TOOD: Implement
     }
     
-    func gameComplete(playerName: String, board: Board) {
+    func gameComplete(playerName: String, board: Board, seconds: Int) {
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "SingleGameOverScene") as? SingleGameOverScene {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
                 
-                scene.setup(delegate: self, board: board)
+                scene.setup(delegate: self, board: board, seconds: seconds)
                 
                 view.presentScene(scene)
             }

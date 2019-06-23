@@ -13,7 +13,7 @@ protocol GameDelegate {
     func selectedDifficulty(difficulty: SudokuRepository.Difficulty?)
     func selectedBoard(board: Board)
     //func readyToPlay(player: String, state: Marker.State)
-    func gameComplete(playerName: String, board: Board)
+    func gameComplete(playerName: String, board: Board, seconds: Int)
     func finishedGame()
     //func skipPlaceMarker(playerName: String)
     //func placeMarker(playerName: String, x: Int, state: Marker.State)
