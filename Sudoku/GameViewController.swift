@@ -22,20 +22,26 @@ class GameViewController: UIViewController, GameDelegate {
     }
     
     func gameComplete(playerName: String, board: Board, seconds: Int) {
+        var completed = false
         if board.isAllNumbersPlaced() {
             BoardStorage().storeCompletedBoard(board: board, seconds: seconds)
+            completed = true
         }else {
             BoardStorage().storeBoardInProgress(board: board, seconds: seconds)
         }
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "SingleGameOverScene") as? SingleGameOverScene {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFit
-                
-                scene.setup(delegate: self, board: board, seconds: seconds)
-                
-                view.presentScene(scene)
+        if !completed {
+            finishedGame()
+        }else {
+            if let view = self.view as! SKView? {
+                // Load the SKScene from 'GameScene.sks'
+                if let scene = SKScene(fileNamed: "SingleGameOverScene") as? SingleGameOverScene {
+                    // Set the scale mode to scale to fit the window
+                    scene.scaleMode = .aspectFit
+                    
+                    scene.setup(delegate: self, board: board, seconds: seconds)
+                    
+                    view.presentScene(scene)
+                }
             }
         }
     }
