@@ -97,7 +97,8 @@ class SudokuRepository {
                                                                                                   HiddenTriples(),
                                                                                                   HiddenQuads(),
                                                                                                   XWing(),
-                                                                                                  YWing()]) {
+                                                                                                  YWing(),
+                                                                                                  SwordFish()]) {
             return Difficulty.VeryHard
         }else {
             print("Unable to solve board with implemented techniques")
@@ -116,7 +117,8 @@ class SudokuRepository {
                                                             HiddenPairs(),
                                                             HiddenTriples(),
                                                             XWing(),
-                                                            YWing()],
+                                                            YWing(),
+                                                            SwordFish()],
                                             maxNumbers: 28, timeoutSeconds: 60)
     }
     
@@ -168,7 +170,8 @@ class SudokuRepository {
                                                              HiddenPairs(),
                                                              HiddenTriples(),
                                                              XWing(),
-                                                             YWing()],
+                                                             YWing(),
+                                                             SwordFish()],
                                                 maxNumbers: 25, timeoutSeconds: 120)
         }
     }
