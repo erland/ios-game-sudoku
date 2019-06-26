@@ -229,6 +229,11 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
             hintName?.fontColor = UIColor.green
             hintName?.text = "Y-Wing"
             hintName?.isHidden = false
+        }else if solver.solve(technique: SwordFish()) {
+            print("Showed solution with SwordFish")
+            hintName?.fontColor = UIColor.green
+            hintName?.text = "Swordfish"
+            hintName?.isHidden = false
         }else {
             hintName?.fontColor = UIColor.orange
             hintName?.text = "No hint available"
