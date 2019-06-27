@@ -98,7 +98,8 @@ class SudokuRepository {
                                                                                                   HiddenQuads(),
                                                                                                   XWing(),
                                                                                                   YWing(),
-                                                                                                  SwordFish()]) {
+                                                                                                  SwordFish(),
+                                                                                                  SimpleColouring()]) {
             return Difficulty.VeryHard
         }else {
             print("Unable to solve board with implemented techniques")
@@ -118,8 +119,9 @@ class SudokuRepository {
                                                             HiddenTriples(),
                                                             XWing(),
                                                             YWing(),
-                                                            SwordFish()],
-                                            maxNumbers: 28, timeoutSeconds: 60)
+                                                            SwordFish(),
+                                                            SimpleColouring()],
+                                            maxNumbers: 28, timeoutSeconds: 120)
     }
     
 
@@ -129,7 +131,7 @@ class SudokuRepository {
         case .Easy:
             return generator.generateWithLimits(maxTechniques: [SingleCandidate(),
                                                              SinglePosition()],
-                                                maxNumbers: 28, timeoutSeconds: 30)
+                                                maxNumbers: 28, timeoutSeconds: 120)
         case .Medium:
             return generator.generateWithLimits(tooEasyTechniques: [SingleCandidate(),
                                                                       SinglePosition()],
@@ -151,7 +153,7 @@ class SudokuRepository {
                                                              NakedTriples(),
                                                              HiddenPairs(),
                                                              HiddenTriples()],
-                                                maxNumbers: 25, timeoutSeconds: 120)
+                                                maxNumbers: 28, timeoutSeconds: 120)
         case .VeryHard:
             return generator.generateWithLimits(tooEasyTechniques: [SingleCandidate(),
                                                                     SinglePosition(),
@@ -171,8 +173,9 @@ class SudokuRepository {
                                                              HiddenTriples(),
                                                              XWing(),
                                                              YWing(),
-                                                             SwordFish()],
-                                                maxNumbers: 25, timeoutSeconds: 120)
+                                                             SwordFish(),
+                                                             SimpleColouring()],
+                                                maxNumbers: 28, timeoutSeconds: 120)
         }
     }
     
