@@ -204,6 +204,8 @@ class Board {
         n!.final = !permanent
         n!.permanent = permanent
         n!.number = number
+        n!.clearCandidates()
+        n!.background = .None
         n!.error = !isValidBoard(number: n!)
         if addedNumber {
             board[x,y] = n
@@ -219,6 +221,41 @@ class Board {
         }
     }
     
+    func setBackground(background: NumberColor, x: Int, y: Int) {
+        if !isInsideBoard(x, y) {
+            return
+        }
+        if board[x,y] != nil && (board[x,y]!.final || board[x,y]!.permanent) {
+            // Already occupied
+            if debug {
+                print("Already occupied")
+            }
+            return
+        }
+        
+        var addedNumber : Bool = false
+        var n = board[x,y]
+        if n == nil {
+            addedNumber = true
+            n = Number(x, y)
+        }
+        n!.final = false
+        n!.permanent = false
+        n!.background = background
+        n!.error = !isValidBoard(number: n!)
+        if addedNumber {
+            board[x,y] = n
+            numbers.insert(n!)
+            for observer in observers {
+                observer.numberAdded(number: n!)
+            }
+        }
+        
+        if debug {
+            print("Board(\(name)): Set background \(background) at: \(x),\(y)")
+        }
+    }
+
     func addPermanentNumber(number: Int, x: Int, y: Int) {
         addFinalNumber(number: number, x: x, y: y, permanent: true)
     }

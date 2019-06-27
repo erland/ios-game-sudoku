@@ -14,6 +14,9 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var boardView : BoardView?
     var eraseButton : SKLabelNode?
     var clearButton : SKLabelNode?
+    var noBackgroundButton : SKShapeNode?
+    var greenBackgroundButton : SKShapeNode?
+    var yellowBackgroundButton : SKShapeNode?
     var candidatePad : NumberPad?
     var permanentPad : NumberPad?
     var selectedPos : IntPosition?
@@ -33,6 +36,9 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         self.eraseButton = childNode(withName: "erase") as? SKLabelNode
         self.quitButton = childNode(withName: "quit") as? SKLabelNode
         self.clearButton = childNode(withName: "clear") as? SKLabelNode
+        self.noBackgroundButton = childNode(withName: "white") as? SKShapeNode
+        self.greenBackgroundButton = childNode(withName: "green") as? SKShapeNode
+        self.yellowBackgroundButton = childNode(withName: "yellow") as? SKShapeNode
         self.boardName = childNode(withName: "boardName") as? SKLabelNode
         self.boardName?.text = board.name
         self.detectCandidatesButton = childNode(withName: "detectCandidates") as? SKLabelNode
@@ -120,6 +126,22 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                     }
                 }
             }
+        }else if noBackgroundButton!.contains(position) {
+            if let selectedPos = selectedPos {
+                boardView!.board!.setBackground(background: .None, x: selectedPos.x, y: selectedPos.y)
+            }
+        }else if greenBackgroundButton!.contains(position) {
+            if let selectedPos = selectedPos {
+                boardView!.board!.setBackground(background: .Green, x: selectedPos.x, y: selectedPos.y)
+            }
+        }else if yellowBackgroundButton!.contains(position) {
+            if let selectedPos = selectedPos {
+                boardView!.board!.setBackground(background: .Yellow, x: selectedPos.x, y: selectedPos.y)
+            }
+        }else if eraseButton!.contains(position) {
+            if let selectedPos = selectedPos {
+                boardView!.board!.removeNumber(x: selectedPos.x, y: selectedPos.y)
+            }
         }else if detectCandidatesButton!.contains(position) {
             detectCandidates()
         }else if removeCandidatesButton!.contains(position) {
@@ -147,6 +169,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         for y in 0..<9 {
             for x in 0..<9 {
                 boardView!.board!.clearCandidates(x: x, y: y)
+                boardView!.board!.setBackground(background: .None, x: x, y: y)
             }
         }
     }
@@ -233,6 +256,11 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
             print("Showed solution with SwordFish")
             hintName?.fontColor = UIColor.green
             hintName?.text = "Swordfish"
+            hintName?.isHidden = false
+        }else if solver.solve(technique: SimpleColouring()) {
+            print("Showed solution with SimpleColoring")
+            hintName?.fontColor = UIColor.green
+            hintName?.text = "Simple colouring"
             hintName?.isHidden = false
         }else {
             hintName?.fontColor = UIColor.orange

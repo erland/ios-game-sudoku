@@ -61,7 +61,19 @@ class NumberView : SKSpriteNode, NumberObserver {
                 label.position.x = (CGFloat(Int((i-1)%3)) * cellSize/3)-cellSize*2/6
                 label.position.y = -(CGFloat(Int((i-1)/3)) * cellSize/3)+cellSize*2/6
                 label.fontColor = UIColor.lightGray
+                label.zPosition = 15
                 addChild(label)
+            }
+            if number.background != .None {
+                let background = SKShapeNode.init(rectOf: CGSize(width: size.width-6, height: size.height-6))
+                if number.background == NumberColor.Green {
+                    background.fillColor = UIColor.init(red: 0.5, green: 1.0, blue: 0.5, alpha: 1.0)
+                }else {
+                    background.fillColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.5, alpha: 1.0)
+                }
+                background.position = CGPoint(x: 1, y: -1)
+                background.zPosition = 10
+                addChild(background)
             }
         }
     }

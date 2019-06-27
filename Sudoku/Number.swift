@@ -12,6 +12,12 @@ import SpriteKit
 protocol NumberObserver {
     func numberUpdated(number: Number)
 }
+
+enum NumberColor {
+    case Green
+    case Yellow
+    case None
+}
 class Number : Hashable, NSCopying {
     var observers: [NumberObserver] = []
     var candidates : [Bool] = [false, false, false, false, false, false, false, false, false, false]
@@ -22,12 +28,14 @@ class Number : Hashable, NSCopying {
         self.final = false
         self.permanent = false
         self.error = false
+        self.background = .None
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = Number(self.x,self.y)
         copy.permanent = self.permanent
         copy.final = self.final
+        copy.background = self.background
         
         return copy
     }
@@ -106,6 +114,12 @@ class Number : Hashable, NSCopying {
             notifyObservers()
         }
     }
+    var background : NumberColor {
+        didSet {
+            notifyObservers()
+        }
+    }
+
     static func == (lhs: Number, rhs: Number) -> Bool {
         return lhs === rhs
     }
