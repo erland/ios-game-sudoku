@@ -24,16 +24,20 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var removeCandidatesButton : SKLabelNode?
     var showHintButton : SKLabelNode?
     var quitButton : SKLabelNode?
+    var memorizeButton : SKLabelNode?
     var hintName : SKLabelNode?
     var timeText : SKLabelNode?
     var boardName : SKLabelNode?
     var timeCounter : Int = 0
+    var memorizedFinalNumbers : String?
+    var memorizedCandidateNumbers : String?
 
     func setup(delegate: GameDelegate, board: Board, startTime: Int) {
         self.gameDelegate = delegate
         
         self.boardView = childNode(withName: "board") as? BoardView
         self.eraseButton = childNode(withName: "erase") as? SKLabelNode
+        self.memorizeButton = childNode(withName: "memory") as? SKLabelNode
         self.quitButton = childNode(withName: "quit") as? SKLabelNode
         self.clearButton = childNode(withName: "clear") as? SKLabelNode
         self.noBackgroundButton = childNode(withName: "white") as? SKShapeNode
@@ -115,17 +119,16 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
             if let selectedPos = selectedPos {
                 boardView!.board!.removeNumber(x: selectedPos.x, y: selectedPos.y)
             }
+        }else if memorizeButton!.contains(position) {
+            if memorizedFinalNumbers != nil {
+                restoreBoard()
+            }else {
+                memorizeBoard()
+            }
         }else if quitButton!.contains(position) {
             gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter)
         }else if clearButton!.contains(position) {
-            for y in 0..<9 {
-                for x in 0..<9 {
-                    let number = boardView!.board!.atPosition(x, y)
-                    if number != nil && !(number!.permanent) {
-                        boardView!.board!.removeNumber(x: x, y: y)
-                    }
-                }
-            }
+            clearBoard()
         }else if noBackgroundButton!.contains(position) {
             if let selectedPos = selectedPos {
                 boardView!.board!.setBackground(background: .None, x: selectedPos.x, y: selectedPos.y)
@@ -150,6 +153,84 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
             showHint()
         }
         checkAndProcessGameEnding()
+    }
+    func clearBoard() {
+        for y in 0..<9 {
+            for x in 0..<9 {
+                let number = boardView!.board!.atPosition(x, y)
+                if number != nil && !(number!.permanent) {
+                    boardView!.board!.removeNumber(x: x, y: y)
+                }
+            }
+        }
+    }
+    func restoreBoard() {
+        clearBoard()
+        let board = boardView!.board!
+        let boardNumbers = memorizedFinalNumbers!
+        for y in 0..<9 {
+            for x in 0..<9 {
+                let i = 9*y+x
+                if boardNumbers.count > i {
+                    let ch = boardNumbers[boardNumbers.index(boardNumbers.startIndex, offsetBy: i)]
+                    if ch != "_" && ch != "0" {
+                        if let num = Int(String(ch)) {
+                            board.addFinalNumber(number: num, x: x, y: y)
+                        }
+                    }
+                }
+            }
+        }
+        let candidateNumbers = memorizedCandidateNumbers!
+        for y in 0..<9 {
+            for x in 0..<9 {
+                for c in 0..<9 {
+                    let i = (9*y+x)*9+c
+                    if candidateNumbers.count > i {
+                        let ch = candidateNumbers[candidateNumbers.index(candidateNumbers.startIndex, offsetBy: i)]
+                        if ch != "_" && ch != "0" {
+                            if let num = Int(String(ch)) {
+                                board.setCandidateNumber(number: num, x: x, y: y)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        memorizedFinalNumbers = nil
+        memorizedCandidateNumbers = nil
+        memorizeButton?.text = "Memorize"
+    }
+    func memorizeBoard() {
+        memorizedFinalNumbers = ""
+        memorizedCandidateNumbers = ""
+        for y in 0..<9 {
+            for x in 0..<9 {
+                let number = boardView!.board!.atPosition(x, y)
+                if let number = number {
+                    if number.final {
+                        memorizedFinalNumbers = memorizedFinalNumbers! + "\(number.number!)"
+                        memorizedCandidateNumbers = memorizedCandidateNumbers! + "_________"
+                    }else if number.permanent {
+                        memorizedFinalNumbers = memorizedFinalNumbers! + "_"
+                        memorizedCandidateNumbers = memorizedCandidateNumbers! + "_________"
+                    }else {
+                        memorizedFinalNumbers = memorizedFinalNumbers! + "_"
+                        for c in 1...9 {
+                            if number.candidates[c-1] {
+                                memorizedCandidateNumbers = memorizedCandidateNumbers! + "\(c)"
+                            }else {
+                                memorizedCandidateNumbers = memorizedCandidateNumbers! + "_"
+                            }
+                        }
+                    }
+                }else {
+                    memorizedFinalNumbers = memorizedFinalNumbers! + "_"
+                    memorizedCandidateNumbers = memorizedCandidateNumbers! + "_________"
+                }
+            }
+        }
+        memorizeButton?.text="Restore"
     }
     func detectCandidates() {
         let boardString = boardView!.board!.asString()
