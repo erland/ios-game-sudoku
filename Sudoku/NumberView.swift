@@ -33,7 +33,11 @@ class NumberView : SKSpriteNode, NumberObserver {
         self.alpha = 1
         removeAllChildren()
         if let n = number.number {
-            let label = SKLabelNode(fontNamed:"Chalkduster")
+            var fontName = "Chalkduster"
+            if number.permanent {
+                fontName = "ArialRoundedMTBold"
+            }
+            let label = SKLabelNode(fontNamed: fontName)
             label.name = "number"
             label.text = "\(n)"
             label.fontSize = 60
