@@ -90,6 +90,7 @@ class GameViewController: UIViewController, GameDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //SudokuRepository().validateBoards()
         selectDifficulty()
     }
 
