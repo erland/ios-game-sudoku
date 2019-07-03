@@ -34,6 +34,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var memorizedFinalNumbers : String?
     var memorizedCandidateNumbers : String?
     var record : Int?
+    var hints = 0
 
     func setup(delegate: GameDelegate, board: Board, startTime: Int) {
         self.gameDelegate = delegate
@@ -145,7 +146,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                 memorizeBoard()
             }
         }else if quitButton!.contains(position) {
-            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter)
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter, hints: hints)
         }else if clearButton!.contains(position) {
             clearBoard()
         }else if noBackgroundButton!.contains(position) {
@@ -263,6 +264,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                 }
             }
         }
+        hints = hints + 1
     }
 
     func removeCandidates() {
@@ -292,80 +294,55 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
             }
         }
         solver.attachObserver(self)
+        hints = hints + 1
+        hintName?.isHidden = false
+        hintName?.fontColor = UIColor.green
         if solver.solve(technique: SingleCandidate()) {
             print("Showed solution with Single Candidate")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Single Candidate"
-            hintName?.isHidden = false
         }else if solver.solve(technique: SinglePosition()) {
             print("Showed solution with Single Position")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Single Position"
-            hintName?.isHidden = false
         }else if solver.solve(technique: CandidateLines()) {
             print("Showed solution with Candidate Lines")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Candidate Line"
-            hintName?.isHidden = false
         }else if solver.solve(technique: MultipleLines()) {
             print("Showed solution with Multiple Lines")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Multiple Lines"
-            hintName?.isHidden = false
         }else if solver.solve(technique: NakedPairs()) {
             print("Showed solution with Naked Pair")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Naked Pair"
-            hintName?.isHidden = false
         }else if solver.solve(technique: NakedTriples()) {
             print("Showed solution with Naked Triples")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Naked Triples"
-            hintName?.isHidden = false
         }else if solver.solve(technique: NakedQuads()) {
             print("Showed solution with Naked Quads")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Naked Quads"
-            hintName?.isHidden = false
         }else if solver.solve(technique: HiddenPairs()) {
             print("Showed solution with Hidden Pair")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Hidden Pair"
-            hintName?.isHidden = false
         }else if solver.solve(technique: HiddenTriples()) {
             print("Showed solution with Hidden Triples")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Hidden Triples"
-            hintName?.isHidden = false
         }else if solver.solve(technique: HiddenQuads()) {
             print("Showed solution with Hidden Quads")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Hidden Quads"
-            hintName?.isHidden = false
         }else if solver.solve(technique: XWing()) {
             print("Showed solution with XWing")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "X-Wing"
-            hintName?.isHidden = false
         }else if solver.solve(technique: YWing()) {
             print("Showed solution with YWing")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Y-Wing"
-            hintName?.isHidden = false
         }else if solver.solve(technique: SwordFish()) {
             print("Showed solution with SwordFish")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Swordfish"
-            hintName?.isHidden = false
         }else if solver.solve(technique: SimpleColouring()) {
             print("Showed solution with SimpleColoring")
-            hintName?.fontColor = UIColor.green
             hintName?.text = "Simple colouring"
-            hintName?.isHidden = false
         }else {
+            hints = hints - 1
             hintName?.fontColor = UIColor.orange
             hintName?.text = "No hint available"
-            hintName?.isHidden = false
         }
     }
     
@@ -381,7 +358,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
 
     func checkAndProcessGameEnding() {
         if boardView!.board!.isAllNumbersPlaced() {
-            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter)
+            gameDelegate?.gameComplete(playerName: boardView!.board!.name, board: boardView!.board!, seconds: timeCounter, hints: hints)
         }
         
     }

@@ -21,13 +21,13 @@ class GameViewController: UIViewController, GameDelegate {
         //TOOD: Implement
     }
     
-    func gameComplete(playerName: String, board: Board, seconds: Int) {
+    func gameComplete(playerName: String, board: Board, seconds: Int, hints: Int) {
         var completed = false
         if board.isAllNumbersPlaced() {
-            BoardStorage().storeCompletedBoard(board: board, seconds: seconds)
+            BoardStorage().storeCompletedBoard(board: board, seconds: seconds, hints: hints)
             completed = true
         }else {
-            BoardStorage().storeBoardInProgress(board: board, seconds: seconds)
+            BoardStorage().storeBoardInProgress(board: board, seconds: seconds, hints: hints)
         }
         if !completed {
             finishedGame()

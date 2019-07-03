@@ -14,6 +14,35 @@ struct StoredBoard : Codable {
     let permanent : String
     let final : String
     let candidates : String
+    let hints : Int
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case seconds = "seconds"
+        case permanent = "permanent"
+        case final = "final"
+        case candidates = "candidates"
+        case hints = "hints"
+    }
+    
+    init(name: String, seconds: Int, permanent: String, final: String, candidates: String, hints: Int) {
+        self.name = name
+        self.seconds = seconds
+        self.permanent = permanent
+        self.final = final
+        self.candidates = candidates
+        self.hints = hints
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        seconds = try values.decode(Int.self, forKey: .seconds)
+        permanent = try values.decode(String.self, forKey: .permanent)
+        final = try values.decode(String.self, forKey: .final)
+        candidates = try values.decode(String.self, forKey: .candidates)
+        hints = try values.decodeIfPresent(Int.self, forKey: .hints) ?? 0
+    }
+    
 }
 
 struct BoardRecord : Codable {
@@ -66,8 +95,8 @@ class BoardStorage {
         return loadData(StoredBoard.self, forKey: "inProgress")
     }
     
-    func storeBoardInProgress(board: Board, seconds: Int) {
-        let storedBoard = serializeBoard(board: board, seconds: seconds)
+    func storeBoardInProgress(board: Board, seconds: Int, hints: Int) {
+        let storedBoard = serializeBoard(board: board, seconds: seconds, hints: hints)
         var boards = loadData(StoredBoard.self, forKey: "inProgress")
         for (i,b) in boards.enumerated() {
             if b.permanent == storedBoard.permanent {
@@ -97,9 +126,11 @@ class BoardStorage {
         }
     }
     
-    func storeCompletedBoard(board: Board, seconds: Int) {
-        let storedBoard = serializeBoard(board: board, seconds: seconds, onlyPermanent: true)
-        registerRecord(boardNumbers: storedBoard.permanent, seconds: seconds)
+    func storeCompletedBoard(board: Board, seconds: Int, hints: Int) {
+        let storedBoard = serializeBoard(board: board, seconds: seconds, hints: hints, onlyPermanent: true)
+        if hints==0 {
+            registerRecord(boardNumbers: storedBoard.permanent, seconds: seconds)
+        }
         var boards = loadData(StoredBoard.self, forKey: "completed")
         for (i,b) in boards.enumerated() {
             if b.permanent == storedBoard.permanent {
@@ -115,7 +146,7 @@ class BoardStorage {
         removeBoardInProgress(storedBoard: storedBoard)
     }
     
-    func serializeBoard(board: Board, seconds: Int, onlyPermanent: Bool = false) -> StoredBoard {
+    func serializeBoard(board: Board, seconds: Int, hints: Int, onlyPermanent: Bool = false) -> StoredBoard {
         var permanent = ""
         var final = ""
         var candidates = ""
@@ -148,9 +179,9 @@ class BoardStorage {
             }
         }
         if onlyPermanent {
-            return StoredBoard.init(name: board.name, seconds: seconds, permanent: permanent, final: "", candidates: "")
+            return StoredBoard.init(name: board.name, seconds: seconds, permanent: permanent, final: "", candidates: "", hints: hints)
         }else {
-            return StoredBoard.init(name: board.name, seconds: seconds, permanent: permanent, final: final, candidates: candidates)
+            return StoredBoard.init(name: board.name, seconds: seconds, permanent: permanent, final: final, candidates: candidates, hints: hints)
         }
     }
     func registerRecord(boardNumbers: String, seconds: Int) {
@@ -185,7 +216,7 @@ class BoardStorage {
     }
 
     func getRecord(board: Board) -> Int? {
-        let serializedBoard = serializeBoard(board: board, seconds: 0, onlyPermanent: true)
+        let serializedBoard = serializeBoard(board: board, seconds: 0, hints: 0, onlyPermanent: true)
         let records = loadData(BoardRecord.self, forKey: "records")
         for r in records {
             if r.permanent == serializedBoard.permanent {

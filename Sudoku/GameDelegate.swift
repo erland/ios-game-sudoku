@@ -15,7 +15,7 @@ protocol GameDelegate {
     func selectedInProgressBoards()
     func selectedBoard(board: Board, startTime: Int)
     //func readyToPlay(player: String, state: Marker.State)
-    func gameComplete(playerName: String, board: Board, seconds: Int)
+    func gameComplete(playerName: String, board: Board, seconds: Int, hints: Int)
     func finishedGame()
     //func skipPlaceMarker(playerName: String)
     //func placeMarker(playerName: String, x: Int, state: Marker.State)
