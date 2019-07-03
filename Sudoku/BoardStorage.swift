@@ -184,6 +184,17 @@ class BoardStorage {
         return nil
     }
 
+    func getRecord(board: Board) -> Int? {
+        let serializedBoard = serializeBoard(board: board, seconds: 0, onlyPermanent: true)
+        let records = loadData(BoardRecord.self, forKey: "records")
+        for r in records {
+            if r.permanent == serializedBoard.permanent {
+                return r.seconds
+            }
+        }
+        return nil
+    }
+
     func getInProgress(boardNumbers: String) -> Int? {
         
         let started = loadData(BoardRecord.self, forKey: "inProgress")

@@ -27,10 +27,13 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var memorizeButton : SKLabelNode?
     var hintName : SKLabelNode?
     var timeText : SKLabelNode?
+    var recordLabel : SKLabelNode?
+    var recordTime : SKLabelNode?
     var boardName : SKLabelNode?
     var timeCounter : Int = 0
     var memorizedFinalNumbers : String?
     var memorizedCandidateNumbers : String?
+    var record : Int?
 
     func setup(delegate: GameDelegate, board: Board, startTime: Int) {
         self.gameDelegate = delegate
@@ -57,6 +60,15 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         print("Setup board view for \(board.name)")
         self.boardView?.setup(board: board)
         self.timeText = childNode(withName: "time") as? SKLabelNode
+        self.recordLabel = childNode(withName: "record") as? SKLabelNode
+        self.recordTime = childNode(withName: "recordTime") as? SKLabelNode
+        record = BoardStorage().getRecord(board: board)
+        if record != nil {
+            recordTime?.text = timeAsString(record!)
+        }else {
+            recordLabel?.isHidden = true
+            recordTime?.isHidden = true
+        }
         timeCounter = startTime
         displayTime()
 
@@ -78,15 +90,22 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         displayTime()
     }
     
-    func displayTime() {
-        let hours = Int(timeCounter/3600)
-        let minutes = String(format: "%02d", Int((timeCounter%3600)/60))
-        let seconds = String(format: "%02d", Int(timeCounter%60))
+    func timeAsString(_ seconds: Int) -> String {
+        let hours = Int(seconds/3600)
+        let minutes = String(format: "%02d",Int((seconds%3600)/60))
+        let seconds = String(format: "%02d",Int(seconds%60))
         if hours == 0 {
-            timeText?.text = "\(minutes):\(seconds)"
+            return  "\(minutes):\(seconds)"
         }else {
-            timeText?.text = "\(hours):\(minutes):\(seconds)"
+            return "\(hours):\(minutes):\(seconds)"
         }
+    }
+
+    func displayTime() {
+        if record != nil && timeCounter>record! {
+            timeText?.fontColor = .red
+        }
+        timeText?.text = "\(timeAsString(timeCounter))"
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
