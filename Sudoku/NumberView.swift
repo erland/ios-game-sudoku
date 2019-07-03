@@ -46,10 +46,8 @@ class NumberView : SKSpriteNode, NumberObserver {
             label.position = CGPoint(x: 0, y: 0)
             if number.error {
                 label.fontColor = UIColor.red
-            }else if number.permanent {
-                label.fontColor = UIColor.black
             }else {
-                label.fontColor = UIColor.darkGray
+                label.fontColor = UIColor.black
             }
             addChild(label)
         }else {
@@ -64,7 +62,7 @@ class NumberView : SKSpriteNode, NumberObserver {
                 print("Adding candidate(\(i)) at \((CGFloat(Int((i-1)%3)) * cellSize/3)), \((CGFloat(Int((i-1)/3)) * cellSize/3))")
                 label.position.x = (CGFloat(Int((i-1)%3)) * cellSize/3)-cellSize*2/6
                 label.position.y = -(CGFloat(Int((i-1)/3)) * cellSize/3)+cellSize*2/6
-                label.fontColor = UIColor.lightGray
+                label.fontColor = UIColor.gray
                 label.zPosition = 15
                 addChild(label)
             }

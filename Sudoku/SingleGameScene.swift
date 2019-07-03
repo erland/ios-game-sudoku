@@ -53,7 +53,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         self.permanentPad = childNode(withName: "permanent") as? NumberPad
         self.permanentPad?.setup(color: .black)
         self.candidatePad = childNode(withName: "candidate") as? NumberPad
-        self.candidatePad?.setup(color: .darkGray)
+        self.candidatePad?.setup(color: .gray)
         print("Setup board view for \(board.name)")
         self.boardView?.setup(board: board)
         self.timeText = childNode(withName: "time") as? SKLabelNode
