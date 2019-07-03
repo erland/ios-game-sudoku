@@ -176,7 +176,7 @@ class SelectLevelScene: SKScene {
                         }
                     }
                     DispatchQueue.main.async {
-                        if repository.getBoard(difficulty: difficulty, level: offset+1) != nil {
+                        if repository.getBoard(difficulty: difficulty, level: offset+13) != nil {
                             self.nextButton?.isHidden = false
                         }else {
                             self.nextButton?.isHidden = true
