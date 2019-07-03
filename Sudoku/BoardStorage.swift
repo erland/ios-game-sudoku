@@ -184,6 +184,17 @@ class BoardStorage {
         return nil
     }
 
+    func getInProgress(boardNumbers: String) -> Int? {
+        
+        let started = loadData(BoardRecord.self, forKey: "inProgress")
+        for b in started {
+            if b.permanent == boardNumbers {
+                return b.seconds
+            }
+        }
+        return nil
+    }
+
     func storeData<T: Codable>(_ value: [T], forKey defaultName: String){
         let data = value.map { try? JSONEncoder().encode($0) }
         

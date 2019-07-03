@@ -18,7 +18,6 @@ class SelectLevelScene: SKScene {
     var loadingText : SKLabelNode?
     var backButton : SKLabelNode?
     var nextButton : SKLabelNode?
-    var startNewGame = true
     var completed : Bool = false
     var inProgress : Bool = false
     var difficulty : SudokuRepository.Difficulty?
@@ -110,7 +109,6 @@ class SelectLevelScene: SKScene {
                     self.loadingText?.isHidden = true
                 }
             }else if self.inProgress {
-                self.startNewGame = false
                 let storedBoards = storage.getBoardsInProgress()
                 for i in 1...12 {
                     if storedBoards.count>(offset+i-1) {
@@ -125,7 +123,7 @@ class SelectLevelScene: SKScene {
                             self.boardTexts[i-1].isHidden = false
                             self.times[i-1] = storedBoard.seconds
                             if self.times[i-1] > 0 {
-                                self.timeTexts[i-1].text = "\(self.timeAsString(self.times[i-1]))"
+                                self.timeTexts[i-1].text = "\(self.timeAsString(self.times[i-1]))..."
                                 self.timeTexts[i-1].isHidden = false
                                 self.timeTexts[i-1].alpha = 0.3
                             }
@@ -155,9 +153,14 @@ class SelectLevelScene: SKScene {
                     for i in 1...12 {
                         let boardNumbers = repository.getBoard(difficulty: difficulty, level: offset+i)
                         if boardNumbers != nil {
-                            let record = storage.getRecord(boardNumbers: boardNumbers!)
-                            if record != nil {
-                                self.times[i-1] = record!
+                            let inProgress = storage.getInProgress(boardNumbers: boardNumbers!)
+                            if inProgress != nil {
+                                self.times[i-1] = inProgress!
+                            }else {
+                                let record = storage.getRecord(boardNumbers: boardNumbers!)
+                                if record != nil {
+                                    self.times[i-1] = record!
+                                }
                             }
                             DispatchQueue.main.async {
                                 let board = Board.init(name: "\(self.difficultyAsString(difficulty)) \(i)", boardNumbers: boardNumbers!)
@@ -168,7 +171,11 @@ class SelectLevelScene: SKScene {
                                 self.boardTexts[i-1].alpha = 0.3
                                 self.boardTexts[i-1].isHidden = false
                                 if self.times[i-1] > 0 {
-                                    self.timeTexts[i-1].text = "\(self.timeAsString(self.times[i-1]))"
+                                    if inProgress != nil {
+                                        self.timeTexts[i-1].text = "\(self.timeAsString(self.times[i-1]))..."
+                                    }else {
+                                        self.timeTexts[i-1].text = "\(self.timeAsString(self.times[i-1]))"
+                                    }
                                     self.timeTexts[i-1].isHidden = false
                                     self.timeTexts[i-1].alpha = 0.3
                                 }
@@ -287,7 +294,7 @@ class SelectLevelScene: SKScene {
             for i in 0..<12 {
                 if boards[i].contains(touchLocation) {
                     if boards[i].board != nil {
-                        if startNewGame {
+                        if timeTexts[i].text == nil || !timeTexts[i].text!.hasSuffix("...") {
                             gameDelegate?.selectedBoard(board: boards[i].board!, startTime: 0)
                         }else {
                             gameDelegate?.selectedBoard(board: boards[i].board!, startTime: times[i])
