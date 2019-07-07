@@ -101,7 +101,7 @@ class BoardView : SKSpriteNode, BoardObserver {
         if self.contains(position) {
             let x = Int((position.x-self.position.x)/cellSize!)
             let y = -Int((position.y-self.position.y)/cellSize!)
-            select(x: x, y: y)
+            _ = select(x: x, y: y)
             return IntPosition(x,y)
         }
         return nil

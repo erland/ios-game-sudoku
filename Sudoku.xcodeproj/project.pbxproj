@@ -8,15 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		DC047F7E22B3941400A298AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F7D22B3941400A298AC /* AppDelegate.swift */; };
-		DC047F8222B3941400A298AC /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC047F8122B3941400A298AC /* Actions.sks */; };
 		DC047F8622B3941400A298AC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F8522B3941400A298AC /* GameViewController.swift */; };
 		DC047F8922B3941400A298AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC047F8722B3941400A298AC /* Main.storyboard */; };
 		DC047F8B22B3941600A298AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC047F8A22B3941600A298AC /* Assets.xcassets */; };
 		DC047F8E22B3941600A298AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC047F8C22B3941600A298AC /* LaunchScreen.storyboard */; };
-		DC047F9B22B395C400A298AC /* MatchMakingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F9522B395C300A298AC /* MatchMakingScene.swift */; };
 		DC047F9C22B395C400A298AC /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F9622B395C400A298AC /* Array2D.swift */; };
-		DC047F9D22B395C400A298AC /* LocalNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F9722B395C400A298AC /* LocalNetworking.swift */; };
-		DC047F9E22B395C400A298AC /* MatchMakingScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC047F9822B395C400A298AC /* MatchMakingScene.sks */; };
 		DC047F9F22B395C400A298AC /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F9922B395C400A298AC /* BoardView.swift */; };
 		DC047FA022B395C400A298AC /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047F9A22B395C400A298AC /* Board.swift */; };
 		DC047FA222B3961C00A298AC /* SingleGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047FA122B3961C00A298AC /* SingleGameScene.swift */; };
@@ -58,16 +54,12 @@
 /* Begin PBXFileReference section */
 		DC047F7A22B3941400A298AC /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC047F7D22B3941400A298AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DC047F8122B3941400A298AC /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		DC047F8522B3941400A298AC /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		DC047F8822B3941400A298AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC047F8A22B3941600A298AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC047F8D22B3941600A298AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC047F8F22B3941600A298AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DC047F9522B395C300A298AC /* MatchMakingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchMakingScene.swift; sourceTree = "<group>"; };
 		DC047F9622B395C400A298AC /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
-		DC047F9722B395C400A298AC /* LocalNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNetworking.swift; sourceTree = "<group>"; };
-		DC047F9822B395C400A298AC /* MatchMakingScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MatchMakingScene.sks; sourceTree = "<group>"; };
 		DC047F9922B395C400A298AC /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		DC047F9A22B395C400A298AC /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DC047FA122B3961C00A298AC /* SingleGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGameScene.swift; sourceTree = "<group>"; };
@@ -140,11 +132,7 @@
 				DC047F9622B395C400A298AC /* Array2D.swift */,
 				DC047F9A22B395C400A298AC /* Board.swift */,
 				DC047F9922B395C400A298AC /* BoardView.swift */,
-				DC047F9722B395C400A298AC /* LocalNetworking.swift */,
-				DC047F9822B395C400A298AC /* MatchMakingScene.sks */,
-				DC047F9522B395C300A298AC /* MatchMakingScene.swift */,
 				DC047F7D22B3941400A298AC /* AppDelegate.swift */,
-				DC047F8122B3941400A298AC /* Actions.sks */,
 				DC047F8522B3941400A298AC /* GameViewController.swift */,
 				DC047F8722B3941400A298AC /* Main.storyboard */,
 				DC047F8A22B3941600A298AC /* Assets.xcassets */,
@@ -258,9 +246,7 @@
 				DC047F8922B3941400A298AC /* Main.storyboard in Resources */,
 				DC047F8B22B3941600A298AC /* Assets.xcassets in Resources */,
 				DC047F8E22B3941600A298AC /* LaunchScreen.storyboard in Resources */,
-				DC047F8222B3941400A298AC /* Actions.sks in Resources */,
 				DC9DB60A22BE966F00D54384 /* SelectLevelScene.sks in Resources */,
-				DC047F9E22B395C400A298AC /* MatchMakingScene.sks in Resources */,
 				DC047FA422B3962F00A298AC /* SingleGameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,12 +274,10 @@
 				DC9DB5FC22BCB69300D54384 /* BoardHandler.swift in Sources */,
 				DC047FA822B39E2D00A298AC /* NumberView.swift in Sources */,
 				DCF80C7222C3DCE1000FE6DF /* SimpleColouring.swift in Sources */,
-				DC047F9D22B395C400A298AC /* LocalNetworking.swift in Sources */,
 				DC047F8622B3941400A298AC /* GameViewController.swift in Sources */,
 				DC047F7E22B3941400A298AC /* AppDelegate.swift in Sources */,
 				DC9DB5EA22BCB56A00D54384 /* MultipleLines.swift in Sources */,
 				DC9DB5E622BCB52000D54384 /* SinglePosition.swift in Sources */,
-				DC047F9B22B395C400A298AC /* MatchMakingScene.swift in Sources */,
 				DC047FAE22B41C0F00A298AC /* SingleGameOverScene.swift in Sources */,
 				DC423B2B22BF6FAA004DCF04 /* BoardStorage.swift in Sources */,
 				DC9DB5FE22BDF99B00D54384 /* YWing.swift in Sources */,

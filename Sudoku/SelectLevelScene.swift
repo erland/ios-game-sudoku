@@ -268,8 +268,6 @@ class SelectLevelScene: SKScene {
             return "Hard"
         case .VeryHard:
             return "Very hard"
-        default:
-            return "\(difficulty)"
         }
     }
     

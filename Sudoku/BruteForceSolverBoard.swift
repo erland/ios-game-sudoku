@@ -20,7 +20,7 @@ class BruteForceSolverBoard : AbstractSolverBoard {
     
     func solve() -> Bool {
         solutions.removeAll()
-        solve(0,0)
+        _ = solve(0,0)
         return solutions.count == 1
     }
     

@@ -15,7 +15,6 @@ class HiddenQuads : HiddenTriples {
         return "HiddenQuads"
     }
     override func solvePosition(board: BoardHandler, x: Int, y: Int) -> Bool {
-        let candidates = board.candidatesAt(x, y)
         var potentialsPos : [[Int]] = [[],[],[],[],[],[],[],[],[]]
         var potentials : [Int] = []
         for c in 1...9 {
