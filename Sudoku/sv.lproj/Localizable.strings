@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  Sudoku
+
+  Created by Erland Isaksson on 2019-08-09.
+  Copyright © 2019 Erland Isaksson. All rights reserved.
+*/
+"selectMode" = "Välj typ av spel";
+"easy" = "Enkelt";
+"medium" = "Normalt";
+"hard" = "Svårt";
+"veryHard" = "Mycket svårt";
+"generateNew" = "Generera nya";
+"previouslyCompleted" = "Tidigare slutförda";
+"previouslyStarted" = "Tidigare påbörjade";
+"selectLevel" = "Välj bana";
+"back" = "Tillbaka";
+"next" = "Nästa";
+"loading" = "Laddar...";
+"restart" = "Börja om";
+"quit" = "Avsluta";
+"notes" = "Anteckningar";
+"hint" = "Ledtråd";
+"erase" = "Sudda";
+"memorize" = "Memorera";
+"restore" = "Återställ";
+"auto" = "Auto";
+"remove" = "Ta bort";
+"noHintAvailable" = "Ingen ledtråd tillgänglig";
+"completedIn" = "Slutfört på";
+"congratulations" = "Grattis";
+"record" = "Rekord";
+"notCompleted" = "Ej slutfört";

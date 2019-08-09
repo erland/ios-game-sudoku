@@ -36,6 +36,10 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
     var record : Int?
     var hints = 0
 
+    override func sceneDidLoad() {
+        localize()
+    }
+    
     func setup(delegate: GameDelegate, board: Board, startTime: Int) {
         self.gameDelegate = delegate
         
@@ -219,7 +223,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         }
         memorizedFinalNumbers = nil
         memorizedCandidateNumbers = nil
-        memorizeButton?.text = "Memorize"
+        memorizeButton?.text = NSLocalizedString("memorize", comment: "memorize")
     }
     func memorizeBoard() {
         memorizedFinalNumbers = ""
@@ -250,7 +254,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
                 }
             }
         }
-        memorizeButton?.text="Restore"
+        memorizeButton?.text=NSLocalizedString("restore", comment: "restore")
     }
     func detectCandidates() {
         let boardString = boardView!.board!.asString()
@@ -342,7 +346,7 @@ class SingleGameScene: SKScene, BoardObserver, SolverObserver {
         }else {
             hints = hints - 1
             hintName?.fontColor = UIColor.orange
-            hintName?.text = "No hint available"
+            hintName?.text = NSLocalizedString("noHintAvailable", comment: "noHintAvailable")
         }
     }
     

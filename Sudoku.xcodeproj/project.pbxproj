@@ -23,6 +23,8 @@
 		DC047FAC22B402EB00A298AC /* NumberPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047FAB22B402EB00A298AC /* NumberPad.swift */; };
 		DC047FAE22B41C0F00A298AC /* SingleGameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC047FAD22B41C0F00A298AC /* SingleGameOverScene.swift */; };
 		DC047FB022B41D5900A298AC /* SingleGameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC047FAF22B41D5900A298AC /* SingleGameOverScene.sks */; };
+		DC3DBD9022FDD041002E0B99 /* SKScene+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3DBD8F22FDD041002E0B99 /* SKScene+Localization.swift */; };
+		DC3DBD9122FDD1C4002E0B99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC3DBD9322FDD1C4002E0B99 /* Localizable.strings */; };
 		DC423B2B22BF6FAA004DCF04 /* BoardStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC423B2A22BF6FAA004DCF04 /* BoardStorage.swift */; };
 		DC9DB5DD22B6143B00D54384 /* SudokuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */; };
 		DC9DB5DF22B61DEF00D54384 /* BruteForceSolverBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9DB5DE22B61DEF00D54384 /* BruteForceSolverBoard.swift */; };
@@ -70,6 +72,9 @@
 		DC047FAB22B402EB00A298AC /* NumberPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPad.swift; sourceTree = "<group>"; };
 		DC047FAD22B41C0F00A298AC /* SingleGameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGameOverScene.swift; sourceTree = "<group>"; };
 		DC047FAF22B41D5900A298AC /* SingleGameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SingleGameOverScene.sks; sourceTree = "<group>"; };
+		DC3DBD8F22FDD041002E0B99 /* SKScene+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKScene+Localization.swift"; sourceTree = "<group>"; };
+		DC3DBD9222FDD1C4002E0B99 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DC3DBD9422FDD1D8002E0B99 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC423B2A22BF6FAA004DCF04 /* BoardStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardStorage.swift; sourceTree = "<group>"; };
 		DC9DB5DC22B6143B00D54384 /* SudokuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuRepository.swift; sourceTree = "<group>"; };
 		DC9DB5DE22B61DEF00D54384 /* BruteForceSolverBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForceSolverBoard.swift; sourceTree = "<group>"; };
@@ -156,6 +161,8 @@
 				DC9DB60722BE965C00D54384 /* SelectLevelScene.swift */,
 				DC9DB60922BE966F00D54384 /* SelectLevelScene.sks */,
 				DC423B2A22BF6FAA004DCF04 /* BoardStorage.swift */,
+				DC3DBD9322FDD1C4002E0B99 /* Localizable.strings */,
+				DC3DBD8F22FDD041002E0B99 /* SKScene+Localization.swift */,
 			);
 			path = Sudoku;
 			sourceTree = "<group>";
@@ -225,6 +232,7 @@
 			knownRegions = (
 				en,
 				Base,
+				sv,
 			);
 			mainGroup = DC047F7122B3941400A298AC;
 			productRefGroup = DC047F7B22B3941400A298AC /* Products */;
@@ -246,6 +254,7 @@
 				DC047F8922B3941400A298AC /* Main.storyboard in Resources */,
 				DC047F8B22B3941600A298AC /* Assets.xcassets in Resources */,
 				DC047F8E22B3941600A298AC /* LaunchScreen.storyboard in Resources */,
+				DC3DBD9122FDD1C4002E0B99 /* Localizable.strings in Resources */,
 				DC9DB60A22BE966F00D54384 /* SelectLevelScene.sks in Resources */,
 				DC047FA422B3962F00A298AC /* SingleGameScene.sks in Resources */,
 			);
@@ -259,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC9DB5E822BCB54900D54384 /* CandidateLines.swift in Sources */,
+				DC3DBD9022FDD041002E0B99 /* SKScene+Localization.swift in Sources */,
 				DC047FAC22B402EB00A298AC /* NumberPad.swift in Sources */,
 				DC9DB5EE22BCB5A300D54384 /* NakedQuads.swift in Sources */,
 				DC047FA622B39B6000A298AC /* Number.swift in Sources */,
@@ -315,6 +325,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		DC3DBD9322FDD1C4002E0B99 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC3DBD9222FDD1C4002E0B99 /* en */,
+				DC3DBD9422FDD1D8002E0B99 /* sv */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -322,6 +341,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -383,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

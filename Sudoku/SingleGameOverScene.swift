@@ -17,6 +17,10 @@ class SingleGameOverScene: SKScene {
     var completedIn: SKLabelNode?
     var boardName: SKLabelNode?
     
+    override func sceneDidLoad() {
+        localize()
+    }
+    
     func setup(delegate: GameDelegate, board: Board, seconds: Int) {
         self.gameDelegate = delegate
         
@@ -27,17 +31,17 @@ class SingleGameOverScene: SKScene {
         self.completedIn = childNode(withName:"completedIn") as? SKLabelNode
         self.boardView?.setup(board: board)
         if boardView!.board!.isAllNumbersPlaced() {
-            status?.text = "Congratulations!"
+            status?.text = "\(NSLocalizedString("congratulations", comment: "congratulations"))!"
             let hours = Int(seconds/3600)
             let minutes = String(format: "%02d",Int((seconds%3600)/60))
             let seconds = String(format: "%02d",Int(seconds%60))
             if hours == 0 {
-                completedIn?.text = "Completed in: \(minutes):\(seconds)"
+                completedIn?.text = "\(NSLocalizedString("completedIn", comment: "completedIn")): \(minutes):\(seconds)"
             }else {
-                completedIn?.text = "Completed in: \(hours):\(minutes):\(seconds)"
+                completedIn?.text = "\(NSLocalizedString("completedIn", comment: "completedIn")): \(hours):\(minutes):\(seconds)"
             }
         }else {
-            status?.text = "Not completed"
+            status?.text = NSLocalizedString("notCompleted", comment: "notCompleted")
             completedIn?.text = ""
         }
         

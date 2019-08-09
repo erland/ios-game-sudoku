@@ -23,6 +23,10 @@ class SelectLevelScene: SKScene {
     var difficulty : SudokuRepository.Difficulty?
     var offset : Int = 0
     
+    override func sceneDidLoad() {
+        localize()
+    }
+    
     func setup(delegate: GameDelegate, difficulty: SudokuRepository.Difficulty?, completed: Bool = false, inProgress: Bool = false) {
         self.gameDelegate = delegate
         self.completed = completed

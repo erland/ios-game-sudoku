@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  Sudoku
+
+  Created by Erland Isaksson on 2019-08-09.
+  Copyright © 2019 Erland Isaksson. All rights reserved.
+*/
+"selectMode" = "Select mode";
+"easy" = "Easy";
+"medium" = "Medium";
+"hard" = "Hard";
+"veryHard" = "Very hard";
+"generateNew" = "Generate new";
+"previouslyCompleted" = "Previously completed";
+"previouslyStarted" = "Previously started";
+"selectLevel" = "Select level";
+"back" = "Back";
+"next" = "Next";
+"loading" = "Loading...";
+"restart" = "Restart";
+"quit" = "Quit";
+"notes" = "Notes";
+"hint" = "Hint";
+"erase" = "Erase";
+"memorize" = "Memorize";
+"restore" = "Restore";
+"auto" = "Auto";
+"remove" = "Remove";
+"noHintAvailable" = "No hint available";
+"completedIn" = "Completed in";
+"congratulations" = "Congratulations";
+"record" = "Record";
+"notCompleted" = "Not completed";
